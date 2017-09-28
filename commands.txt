@@ -1,1 +1,2 @@
 php artisan crud:generate Category --fields="title:string:required" --route=yes --pk=id --view-path="admin" --namespace=Admin --route-group=admin
+php artisan crud:generate Quest --fields="category_id:integer:required, title:string:required, question:string:required, image_url:string" --route=yes --pk=id --view-path="admin" --namespace=Admin --route-group=admin

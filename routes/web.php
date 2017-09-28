@@ -22,3 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['web']], function () {
 	Route::resource('admin/category', 'Admin\\CategoryController');
 });
+Route::group(['middleware' => ['web']], function () {
+	Route::resource('admin/quest', 'Admin\\QuestController');
+});
