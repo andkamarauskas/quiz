@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Session;
 
 use File;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 class QuestController extends Controller
 {
 
@@ -51,14 +51,43 @@ class QuestController extends Controller
             'category_id' => 'required',
             'title' => 'required',
             'question' => 'required',
-            'image' => 'required | mimes:jpeg,jpg,png | max:1000' ]);
+            'images.0' => 'required',
+            'images.1' => 'required'
+        ]);
+        if($request->hasFile('images'))
+        {
+            $error_messages = array();
+            foreach ($request->images as $image) {
+                // Ignore array member if it's not an UploadedFile object, just to be extra safe
+                if (!is_a($image, 'Symfony\Component\HttpFoundation\File\UploadedFile')) {
+                    continue;
+                }
+                $validator = Validator::make(
+                    array('file' => $image),
+                    array('file' => 'required|mimes:jpeg,jpg|image|max:1000')
+                );
+
+                if ($validator->passes()) {
+                    echo "works";
+                } else {
+                    return $error_messages[] = 'Image "' . $image->getClientOriginalName() . '":' . $validator->messages()->first('file');
+                }
+
+            }
+        }
+        dd($request->images[0]);
 
         $quest = Quest::create($request->all());
 
-        if ($request->hasFile('image'))
+        if ($request->hasFile('image') && $request->hasFile('answer_image'))
         {
-            $imageName = $quest->id . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move( base_path() . '/public/images/quests/', $imageName );  
+            $img_path = base_path() . '/public/images/quests/';
+
+            // $questionImgName = $quest->id . '.' . $request->file('image')->getClientOriginalExtension();
+            // $request->file('image')->move( base_path() . '/public/images/quests/', $questionImgName );
+
+            $answerImgName = 'answer_'. $quest->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move( $img_path, $answerImgName );
         }
 
         Session::flash('message', 'Quest added!');
@@ -110,7 +139,7 @@ class QuestController extends Controller
         {
             $this->validate($request,['image' => 'required | mimes:jpeg,jpg,png | max:1000']);
             File::delete(public_path('/images/quests/'. $id .'.jpg'));
-                        
+
             $imageName = $id . '.' . $request->file('image')->getClientOriginalExtension();
             $request->file('image')->move( base_path() . '/public/images/quests/', $imageName ); 
         }

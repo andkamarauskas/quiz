@@ -31,14 +31,18 @@ Create new Quest
             {!! $errors->first('question', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
-    <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
-        {!! Form::label('image', 'Image: ', ['class' => 'col-sm-3 control-label']) !!}
-
+    <div class="form-group {{ $errors->has('images[]') ? 'has-error' : ''}}">
+        {!! Form::label('images[]', 'Question Image: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
-            {!! Form::file('image', null, ['class' => 'form-control']) !!}
+            <input type="file" name="images[]"  multiple>
         </div>
     </div>
-
+    <div class="form-group {{ $errors->has('images[]') ? 'has-error' : ''}}">
+        {!! Form::label('images[]', 'Answer Image: ', ['class' => 'col-sm-3 control-label']) !!}
+        <div class="col-sm-6">
+            <input type="file" name="images[]"  multiple>
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
