@@ -51,43 +51,21 @@ class QuestController extends Controller
             'category_id' => 'required',
             'title' => 'required',
             'question' => 'required',
-            'images.0' => 'required',
-            'images.1' => 'required'
+            'images.0' => 'required|mimes:jpeg,jpg|image|max:1000',
+            'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
         ]);
-        if($request->hasFile('images'))
-        {
-            $error_messages = array();
-            foreach ($request->images as $image) {
-                // Ignore array member if it's not an UploadedFile object, just to be extra safe
-                if (!is_a($image, 'Symfony\Component\HttpFoundation\File\UploadedFile')) {
-                    continue;
-                }
-                $validator = Validator::make(
-                    array('file' => $image),
-                    array('file' => 'required|mimes:jpeg,jpg|image|max:1000')
-                );
-
-                if ($validator->passes()) {
-                    echo "works";
-                } else {
-                    return $error_messages[] = 'Image "' . $image->getClientOriginalName() . '":' . $validator->messages()->first('file');
-                }
-
-            }
-        }
-        dd($request->images[0]);
 
         $quest = Quest::create($request->all());
+        //next magic, uploads multiple images
+        if($request->hasFile('images'))
+        {          
+            foreach ($request->images as $index => $image) {
 
-        if ($request->hasFile('image') && $request->hasFile('answer_image'))
-        {
-            $img_path = base_path() . '/public/images/quests/';
+                if($index == 0){$imageName = 'quest_';}else{$imageName='answer_';}
 
-            // $questionImgName = $quest->id . '.' . $request->file('image')->getClientOriginalExtension();
-            // $request->file('image')->move( base_path() . '/public/images/quests/', $questionImgName );
-
-            $answerImgName = 'answer_'. $quest->id . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move( $img_path, $answerImgName );
+                $imageName = $imageName. $quest->id . '.' . $request->file('images')[$index]->getClientOriginalExtension();
+                $request->file('images')[$index]->move( base_path() . '/public/images/quests/', $imageName );
+            }
         }
 
         Session::flash('message', 'Quest added!');
@@ -165,7 +143,8 @@ class QuestController extends Controller
         $quest = Quest::findOrFail($id);
         $quest->delete();
 
-        File::delete(public_path('/images/quests/'. $id .'.jpg'));
+        File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
+        File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
 
         Session::flash('message', 'Quest deleted!');
         Session::flash('status', 'success');
