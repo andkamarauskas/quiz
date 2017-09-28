@@ -18,7 +18,6 @@ class CreateQuestsTable extends Migration
             $table->integer('category_id')->unsigned();;
             $table->string('title');
             $table->string('question');
-            $table->string('image_url');
 
             $table->timestamps();
             $table->softDeletes();

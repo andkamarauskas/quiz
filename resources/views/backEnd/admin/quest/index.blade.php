@@ -5,13 +5,12 @@ Quest
 
 @section('content')
 
-    <h1>Quest <a href="{{ url('admin/quest/create') }}" class="btn btn-primary pull-right btn-sm">Add New Quest</a></h1>
-    {{ HTML::image('images/quests/6.jpg') }}
+    <h1>Quest <a href="{{ url('admin/quest/create') }}" class="btn btn-success pull-right btn-sm">Add New Quest</a></h1>
     <div class="table table-responsive">
         <table class="table table-bordered table-striped table-hover" id="tbladmin/quest">
             <thead>
                 <tr>
-                    <th>ID</th><th>Question</th><th>Title</th><th>Image Url</th><th>Category</th><th>Actions</th>
+                    <th>ID</th><th>Question</th><th>Title</th><th>Category</th><th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,7 +19,6 @@ Quest
                     <td>{{ $item->id }}</td>
                     <td><a href="{{ url('admin/quest', $item->id) }}">{{ $item->question }}</a></td>
                     <td>{{ $item->title }}</td>
-                    <td>{{ $item->image_url }}</td>
                     <td>{{ $item->category->title }}</td>
                     <td>
                         <a href="{{ url('admin/quest/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 

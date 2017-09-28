@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
 
+use File;
+use Illuminate\Support\Facades\Storage;
 class QuestController extends Controller
 {
 
@@ -45,15 +47,19 @@ class QuestController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, ['category_id' => 'required', 'title' => 'required', 'question' => 'required', ]);
+        $this->validate($request, [
+            'category_id' => 'required',
+            'title' => 'required',
+            'question' => 'required',
+            'image' => 'required | mimes:jpeg,jpg,png | max:1000' ]);
 
         $quest = Quest::create($request->all());
 
-        $imageName = $quest->id . '.' . $request->file('image')->getClientOriginalExtension();
-
-        $request->file('image')->move(
-            base_path() . '/public/images/quests/', $imageName
-        );
+        if ($request->hasFile('image'))
+        {
+            $imageName = $quest->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move( base_path() . '/public/images/quests/', $imageName );  
+        }
 
         Session::flash('message', 'Quest added!');
         Session::flash('status', 'success');
@@ -100,6 +106,15 @@ class QuestController extends Controller
     {
         $this->validate($request, ['category_id' => 'required', 'title' => 'required', 'question' => 'required', ]);
 
+        if ($request->hasFile('image'))
+        {
+            $this->validate($request,['image' => 'required | mimes:jpeg,jpg,png | max:1000']);
+            File::delete(public_path('/images/quests/'. $id .'.jpg'));
+                        
+            $imageName = $id . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move( base_path() . '/public/images/quests/', $imageName ); 
+        }
+
         $quest = Quest::findOrFail($id);
         $quest->update($request->all());
 
@@ -119,8 +134,9 @@ class QuestController extends Controller
     public function destroy($id)
     {
         $quest = Quest::findOrFail($id);
-
         $quest->delete();
+
+        File::delete(public_path('/images/quests/'. $id .'.jpg'));
 
         Session::flash('message', 'Quest deleted!');
         Session::flash('status', 'success');

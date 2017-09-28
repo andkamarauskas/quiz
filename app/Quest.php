@@ -20,7 +20,7 @@ class Quest extends Model
      *
      * @var array
      */
-    protected $fillable = ['category_id', 'title', 'question', 'image_url'];
+    protected $fillable = ['category_id', 'title', 'question'];
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
