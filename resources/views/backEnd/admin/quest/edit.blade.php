@@ -5,7 +5,7 @@ Edit Quest
 
 @section('content')
 
-<h1>Edit Quest</h1>
+<h1>Edit Quest <a href="{{ url('admin/quest')}}" class="btn btn-success pull-right">Back</a></h1>
 <hr/>
 
 {!! Form::model($quest, [
@@ -35,25 +35,24 @@ Edit Quest
                 {!! $errors->first('question', '<p class="help-block">:message</p>') !!}
             </div>
         </div>
-        <div class="form-group {{ $errors->has('image') ? 'has-error' : ''}}">
-            {!! Form::label('image', 'Image: ', ['class' => 'col-sm-3 control-label']) !!}
+        <div class="form-group {{ $errors->has('images[]') ? 'has-error' : ''}}">
+            {!! Form::label('images[]', 'Question Image: ', ['class' => 'col-sm-3 control-label']) !!}
             <div class="col-sm-6">
-                {!! Form::file('image', null, ['class' => 'form-control']) !!}
-                {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
+                <input type="file" name="images[]"  multiple>
             </div>
         </div>
-
+        <div class="form-group {{ $errors->has('images[]') ? 'has-error' : ''}}">
+            {!! Form::label('images[]', 'Answer Image: ', ['class' => 'col-sm-3 control-label']) !!}
+            <div class="col-sm-6">
+                <input type="file" name="images[]"  multiple>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-3">
                 {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
             </div>
         </div>
         {!! Form::close() !!}
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/' . $quest->id . '.jpg') }}">
-            </div>
-        </div>
         @if ($errors->any())
         <ul class="alert alert-danger">
             @foreach ($errors->all() as $error)
@@ -61,5 +60,14 @@ Edit Quest
             @endforeach
         </ul>
         @endif
-
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2">
+                <h3>Quest Image</h3>
+                <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $quest->id . '.jpg') }}">
+            </div>
+            <div class="col-md-4">
+                <h3>Answer Image</h3>
+                <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/answer_' . $quest->id . '.jpg') }}">
+            </div>
+        </div>
         @endsection

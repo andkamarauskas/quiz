@@ -111,15 +111,26 @@ class QuestController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['category_id' => 'required', 'title' => 'required', 'question' => 'required', ]);
+        $this->validate($request, [
+            'category_id' => 'required',
+            'title' => 'required',
+            'question' => 'required', 
+            'images.0' => 'required | mimes:jpeg,jpg,png | max:1000',
+            'images.1' => 'required | mimes:jpeg,jpg,png | max:1000'
+        ]);
 
-        if ($request->hasFile('image'))
-        {
-            $this->validate($request,['image' => 'required | mimes:jpeg,jpg,png | max:1000']);
-            File::delete(public_path('/images/quests/'. $id .'.jpg'));
+        if($request->hasFile('images'))
+        {  
+            File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
+            File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
 
-            $imageName = $id . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move( base_path() . '/public/images/quests/', $imageName ); 
+            foreach ($request->images as $index => $image) {
+
+                if($index == 0){$imageName = 'quest_';}else{$imageName='answer_';}
+
+                $imageName = $imageName. $id . '.' . $request->file('images')[$index]->getClientOriginalExtension();
+                $request->file('images')[$index]->move( base_path() . '/public/images/quests/', $imageName );
+            }
         }
 
         $quest = Quest::findOrFail($id);

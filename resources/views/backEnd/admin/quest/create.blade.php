@@ -5,7 +5,7 @@ Create new Quest
 
 @section('content')
 
-<h1>Create New Quest</h1>
+<h1>Create New Quest <a href="{{ url('admin/quest')}}" class="btn btn-success pull-right">Back</a></h1>
 <hr/>
 
 {!! Form::open(['url' => 'admin/quest', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
