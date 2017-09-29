@@ -44,7 +44,7 @@ Quest
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="col-md-1">No</th>
+                        <th class="col-md-1"></th>
                         <th>Answer</th>
                     </tr>
                 </thead>

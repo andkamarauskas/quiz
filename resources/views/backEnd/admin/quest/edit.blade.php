@@ -35,6 +35,16 @@ Edit Quest
                 {!! $errors->first('question', '<p class="help-block">:message</p>') !!}
             </div>
         </div>
+        @for ($i=0; $i < 5 ; $i++)
+        <div class="form-group {{ $errors->has('answers') ? 'has-error' : ''}}">
+            <label for="answers" class="col-sm-3 control-label">Answer {{$i+1}}</label>
+            <div class="col-sm-6">
+                <input type="text" name="answers[]" value="@if (isset($answers[$i])) {{ $answers[$i] }} @endif" class="form-control" @if($i==0) required @endif>
+                {!! $errors->first('answers', '<p class="help-block">:message</p>') !!}
+            </div>
+        </div>
+        @endfor
+        
         <div class="form-group {{ $errors->has('images[]') ? 'has-error' : ''}}">
             {!! Form::label('images[]', 'Question Image: ', ['class' => 'col-sm-3 control-label']) !!}
             <div class="col-sm-6">

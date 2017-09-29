@@ -72,7 +72,10 @@ class QuestController extends Controller
         }
         foreach ($request->answers as $key => $answer)
         {
-            Answer::create(['quest_id' => $quest->id, 'answer' => $answer]);
+            if($answer != null)
+            {
+                Answer::create(['quest_id' => $quest->id, 'answer' => $answer]);
+            }
         }
 
         Session::flash('message', 'Quest added!');
@@ -106,7 +109,8 @@ class QuestController extends Controller
     {
         $quest = Quest::findOrFail($id);
         $categories = Category::pluck('title','id');
-        return view('backEnd.admin.quest.edit', compact('quest','categories'));
+        $answers = $quest->answers->pluck('answer');
+        return view('backEnd.admin.quest.edit', compact('quest', 'categories', 'answers'));
     }
 
     /**
@@ -121,9 +125,10 @@ class QuestController extends Controller
         $this->validate($request, [
             'category_id' => 'required',
             'title' => 'required',
-            'question' => 'required', 
-            'images.0' => 'required | mimes:jpeg,jpg,png | max:1000',
-            'images.1' => 'required | mimes:jpeg,jpg,png | max:1000'
+            'question' => 'required',
+            'answers' => 'required|array|min:1',
+            'images.0' => 'mimes:jpeg,jpg,png | max:1000',
+            'images.1' => 'mimes:jpeg,jpg,png | max:1000'
         ]);
 
         if($request->hasFile('images'))
@@ -143,6 +148,17 @@ class QuestController extends Controller
         $quest = Quest::findOrFail($id);
         $quest->update($request->all());
 
+        $oldAnswers = $quest->answers;
+        foreach ($oldAnswers as $answer) {
+            $answer->delete();
+        }
+        foreach ($request->answers as $key => $answer)
+        {
+            if($answer != null)
+            {
+                Answer::create(['quest_id' => $id, 'answer' => $answer]);
+            }
+        }
         Session::flash('message', 'Quest updated!');
         Session::flash('status', 'success');
 
@@ -159,6 +175,11 @@ class QuestController extends Controller
     public function destroy($id)
     {
         $quest = Quest::findOrFail($id);
+        
+        $oldAnswers = $quest->answers;
+        foreach ($oldAnswers as $answer) {
+            $answer->delete();
+        }
         $quest->delete();
 
         File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
