@@ -31,13 +31,32 @@ Quest
         </table>
     </div>
     <div class="row">
-        <div class="col-md-4 col-md-offset-2">
+        <div class="col-md-4">
             <h3>Quest Image</h3>
             <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $quest->id . '.jpg') }}">
         </div>
         <div class="col-md-4">
             <h3>Answer Image</h3>
             <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/answer_' . $quest->id . '.jpg') }}">
+        </div>
+        <div class="col-md-4">
+            <h3>Possible Answers</h3>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">No</th>
+                        <th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($quest->answers as $key => $answer)
+                    <tr>
+                        <td>{{ $key+1 }}</td>
+                        <td>{{ $answer->answer }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
  @endsection

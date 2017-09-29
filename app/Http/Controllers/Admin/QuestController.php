@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Quest;
 use App\Category;
+use App\Answer;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -51,6 +52,8 @@ class QuestController extends Controller
             'category_id' => 'required',
             'title' => 'required',
             'question' => 'required',
+            'answers' => 'required|array|min:1',
+            'images' => 'required|array|min:2',
             'images.0' => 'required|mimes:jpeg,jpg|image|max:1000',
             'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
         ]);
@@ -66,6 +69,10 @@ class QuestController extends Controller
                 $imageName = $imageName. $quest->id . '.' . $request->file('images')[$index]->getClientOriginalExtension();
                 $request->file('images')[$index]->move( base_path() . '/public/images/quests/', $imageName );
             }
+        }
+        foreach ($request->answers as $key => $answer)
+        {
+            Answer::create(['quest_id' => $quest->id, 'answer' => $answer]);
         }
 
         Session::flash('message', 'Quest added!');
