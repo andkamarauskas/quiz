@@ -5,7 +5,7 @@ Quest
 
 @section('content')
 
-    <h1>Quest <a href="{{ url('admin/quest/create') }}" class="btn btn-success pull-right btn-sm">Add New Quest</a></h1>
+    <h1>Quests <a href="{{ url('admin/quest/create') }}" class="btn btn-success pull-right btn-sm">Add New Quest</a></h1>
     <div class="table table-responsive">
         <table class="table table-bordered table-striped table-hover" id="tbladmin/quest">
             <thead>

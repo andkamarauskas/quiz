@@ -25,7 +25,6 @@ class QuestController extends Controller
     public function index()
     {
         $quest = Quest::all();
-
         return view('backEnd.admin.quest.index', compact('quest'));
     }
 

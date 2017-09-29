@@ -23,6 +23,11 @@ class Category extends Model
     protected $fillable = ['title'];
 
     use SoftDeletes;
+    
     protected $dates = ['deleted_at'];
 
+    public function quests()
+    {
+        return $this->hasMany('App\Quest');
+    }
 }
