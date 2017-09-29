@@ -23,6 +23,7 @@ class Quest extends Model
     protected $fillable = ['category_id', 'title', 'question'];
 
     use SoftDeletes;
+
     protected $dates = ['deleted_at'];
 
     public function category()
@@ -30,4 +31,8 @@ class Quest extends Model
         return $this->belongsTo('App\Category');
     }
 
+    public function answers()
+    {
+        return $this->hasMany('App\Answer');
+    }
 }
