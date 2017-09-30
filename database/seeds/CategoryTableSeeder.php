@@ -18,7 +18,8 @@ class CategoryTableSeeder extends Seeder
     		'Istorija',
     		'Geografija',
     		'Knygos',
-    		'Muzika'
+    		'Muzika',
+            'Menas'
     		];
 
     	foreach ($categories as $category) {

@@ -10,7 +10,7 @@ Quest
         <table class="table table-bordered table-striped table-hover" id="tbladmin/quest">
             <thead>
                 <tr>
-                    <th>ID</th><th>Question</th><th>Title</th><th>Category</th><th>Actions</th>
+                    <th>ID</th><th>Question</th><th>Title</th><th>Category</th><th>Status</th><th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +20,7 @@ Quest
                     <td><a href="{{ url('admin/quest', $item->id) }}">{{ $item->question }}</a></td>
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->category->title }}</td>
+                    <td>{{ $item->status->title }}</td>
                     <td>
                         <a href="{{ url('admin/quest/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
                         {!! Form::open([

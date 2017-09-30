@@ -10,12 +10,16 @@ Quest
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
-                <th>ID.</th> <th>Category</th><th>Title</th><th>Question</th><th>Actions</th>
+                <th>ID.</th> <th>Question</th><th>Title</th><th>Category</th><th>Status</th><th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{ $quest->id }}</td> <td> {{ $quest->category->title }} </td><td> {{ $quest->title }} </td><td> {{ $quest->question }} </td>
+                <td>{{ $quest->id }}</td>
+                <td> {{ $quest->question }} </td>
+                <td> {{ $quest->title }} </td>
+                <td> {{ $quest->category->title }}</td>
+                <td> {{ $quest->status->title }}</td>
                 <td>
                     <a href="{{ url('admin/quest/' . $quest->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
                     {!! Form::open([

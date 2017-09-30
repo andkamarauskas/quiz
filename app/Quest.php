@@ -20,7 +20,7 @@ class Quest extends Model
      *
      * @var array
      */
-    protected $fillable = ['category_id', 'title', 'question'];
+    protected $fillable = ['category_id','status_id', 'title', 'question'];
 
     use SoftDeletes;
 
@@ -30,7 +30,10 @@ class Quest extends Model
     {
         return $this->belongsTo('App\Category');
     }
-
+    public function status()
+    {
+        return $this->belongsTo('App\Status');
+    }
     public function answers()
     {
         return $this->hasMany('App\Answer');

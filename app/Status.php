@@ -3,17 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Status extends Model
 {
-
-    /**
+     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'categories';
+    protected $table = 'statuses';
 
     /**
      * Attributes that should be mass-assignable.
@@ -21,10 +19,6 @@ class Category extends Model
      * @var array
      */
     protected $fillable = ['title'];
-
-    use SoftDeletes;
-
-    protected $dates = ['deleted_at'];
 
     public function quests()
     {

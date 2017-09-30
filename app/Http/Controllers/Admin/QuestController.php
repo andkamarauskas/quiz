@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Quest;
 use App\Category;
 use App\Answer;
+use App\Status;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -36,7 +37,8 @@ class QuestController extends Controller
     public function create()
     {
         $categories = Category::pluck('title','id');
-        return view('backEnd.admin.quest.create',compact('categories'));
+        $statuses = Status::pluck('title','id');
+        return view('backEnd.admin.quest.create',compact('categories','statuses'));
     }
 
     /**
@@ -49,6 +51,7 @@ class QuestController extends Controller
 
         $this->validate($request, [
             'category_id' => 'required',
+            'status_id' => 'required',
             'title' => 'required',
             'question' => 'required',
             'answers' => 'required|array|min:1',
@@ -56,7 +59,6 @@ class QuestController extends Controller
             'images.0' => 'required|mimes:jpeg,jpg|image|max:1000',
             'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
         ]);
-
         $quest = Quest::create($request->all());
         //next magic, uploads multiple images
         if($request->hasFile('images'))
@@ -108,8 +110,9 @@ class QuestController extends Controller
     {
         $quest = Quest::findOrFail($id);
         $categories = Category::pluck('title','id');
+        $statuses = Status::pluck('title','id');
         $answers = $quest->answers->pluck('answer');
-        return view('backEnd.admin.quest.edit', compact('quest', 'categories', 'answers'));
+        return view('backEnd.admin.quest.edit', compact('quest', 'categories', 'answers','statuses'));
     }
 
     /**
@@ -123,6 +126,7 @@ class QuestController extends Controller
     {
         $this->validate($request, [
             'category_id' => 'required',
+            'status_id' => 'required',
             'title' => 'required',
             'question' => 'required',
             'answers' => 'required|array|min:1',
