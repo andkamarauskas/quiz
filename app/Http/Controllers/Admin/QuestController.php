@@ -159,6 +159,7 @@ class QuestController extends Controller
         {
             if($answer != null)
             {
+                $answer = strtolower($answer);
                 Answer::create(['quest_id' => $id, 'answer' => $answer]);
             }
         }

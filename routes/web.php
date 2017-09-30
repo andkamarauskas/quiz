@@ -25,3 +25,5 @@ Route::group(['middleware' => ['web']], function () {
 Route::group(['middleware' => ['web']], function () {
 	Route::resource('admin/quest', 'Admin\\QuestController');
 });
+
+Route::get('/train', 'TrainController@index')->name('train.index');
