@@ -21,7 +21,12 @@ class Status extends Model
     protected $fillable = ['title'];
 
     public function quests()
-    {
-        return $this->hasMany('App\Quest');
+    {    	
+      	$quests = $this->hasMany('App\Quest');
+      	$quests->getQuery()
+      			->orderByRaw("RAND()")
+      			->limit(2);
+      	return $quests;
+
     }
 }

@@ -27,3 +27,4 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('/train', 'TrainController@index')->name('train.index');
+Route::get('/train/start', 'TrainController@start')->name('train.start');
