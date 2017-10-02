@@ -3,27 +3,45 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
         	<div class="panel panel-success">
-        		<div class="panel-heading"><h3>Correct asnwers: {{$correct_answers_num}}</h3></div>
+        		<div class="panel-heading">
+                    <h3>Quiz Results</h3>
+                    {{$correct_answers_num}} Your Aswers Was Right
+                </div>
         		<div class="panel-body">
-        			@foreach($train_quests as $train_quest)
-                    <p>
-                        <p>
-                            <strong>{{$train_quest->quest->question}}</strong>
+        			@foreach($train_quests as $key => $train_quest)
+                    <div class="row">
+                        <div class="text-center">
+                            <h3>
+                                {{$key+1}} {{$train_quest->quest->question}}
+                                @if($train_quest->correct)
+                                <div class="text-success"><strong>You answered right</strong></div>
+                                @else
+                                <div class="text-danger"><strong>You answered wrong</strong></div>
+                                @endif
+                            </h3>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Quest</h4>
                             <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $train_quest->quest->id . '.jpg') }}">
-                        </p>
-                        <p>
-                            <strong>Available Answers</strong>
+                            <p>
+                                <strong>Your Answers:</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Answer</h4>
                             <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/answer_' . $train_quest->quest->id . '.jpg') }}">
-                            <ul>
-                            @foreach($train_quest->quest->answers as $answer)
-                                <li>{{$answer->answer}}</li>
-                            @endforeach
-                            </ul>
-                        </p>
-
-                    </p>
+                            <p>
+                                <strong>Available Answers:</strong>
+                                <ul>
+                                    @foreach($train_quest->quest->answers as $answer)
+                                    <li>{{$answer->answer}}</li>
+                                    @endforeach
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
             </div>
