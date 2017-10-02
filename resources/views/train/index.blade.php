@@ -15,7 +15,7 @@
                     <input type="text" name="train_id" value = "{{$train_id}}" hidden>
                     <div class="form-group {{ $errors->has('answers') ? 'has-error' : ''}}">
                         <div class="col-sm-12">
-                            {!! Form::text('answers[]', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                            {!! Form::text('answers', null, ['class' => 'form-control', 'required' => 'required']) !!}
                             {!! $errors->first('answers', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>

@@ -24,7 +24,7 @@ class Train extends Model
     {
         return $this->belongsTo('App\User');
     }
-    public function quests()
+    public function available_quests()
     {
     	$quests = $this->hasMany('App\TrainQuest');
         $quests->getQuery()->where('used', 0);
