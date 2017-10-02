@@ -20,7 +20,7 @@ Quest
                     <td><a href="{{ url('admin/quest', $item->id) }}">{{ $item->question }}</a></td>
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->category->title }}</td>
-                    <td>{{ $item->status->title }}</td>
+                    <td>{{ $item->status }}</td>
                     <td>
                         <a href="{{ url('admin/quest/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
                         {!! Form::open([

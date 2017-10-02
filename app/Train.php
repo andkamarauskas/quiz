@@ -26,6 +26,8 @@ class Train extends Model
     }
     public function quests()
     {
-    	return $this->hasMany('App\TrainQuest');
+    	$quests = $this->hasMany('App\TrainQuest');
+        $quests->getQuery()->where('used', 0);
+        return $quests;
     }
 }

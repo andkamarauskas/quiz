@@ -19,7 +19,7 @@ Quest
                 <td> {{ $quest->question }} </td>
                 <td> {{ $quest->title }} </td>
                 <td> {{ $quest->category->title }}</td>
-                <td> {{ $quest->status->title }}</td>
+                <td> {{ $quest->status }}</td>
                 <td>
                     <a href="{{ url('admin/quest/' . $quest->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
                     {!! Form::open([

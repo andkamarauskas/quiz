@@ -28,3 +28,5 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::get('/train', 'TrainController@index')->name('train.index');
 Route::get('/train/start', 'TrainController@start')->name('train.start');
+Route::get('/train/play', 'TrainController@play')->name('train.play');
+Route::post('/train/next', 'TrainController@next')->name('train.next');

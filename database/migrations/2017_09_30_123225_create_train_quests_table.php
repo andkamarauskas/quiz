@@ -17,7 +17,7 @@ class CreateTrainQuestsTable extends Migration
             $table->increments('id');
             $table->integer('train_id')->unsigned();
             $table->integer('quest_id')->unsigned();
-            $table->string('status')->default('active');
+            $table->boolean('used')->default(false);
             $table->foreign('train_id')->references('id')->on('trains')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('quest_id')->references('id')->on('quests')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

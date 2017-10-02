@@ -18,7 +18,7 @@ class TrainQuest extends Model
      *
      * @var array
      */
-    protected $fillable = ['train_id','quest_id','status'];
+    protected $fillable = ['train_id','quest_id','used'];
 
     public function train()
     {

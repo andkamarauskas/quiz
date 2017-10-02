@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Quest;
 use App\Category;
 use App\Answer;
-use App\Status;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -37,8 +36,7 @@ class QuestController extends Controller
     public function create()
     {
         $categories = Category::pluck('title','id');
-        $statuses = Status::pluck('title','id');
-        return view('backEnd.admin.quest.create',compact('categories','statuses'));
+        return view('backEnd.admin.quest.create',compact('categories'));
     }
 
     /**
@@ -48,10 +46,9 @@ class QuestController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'category_id' => 'required',
-            'status_id' => 'required',
+            'status' => 'required',
             'title' => 'required',
             'question' => 'required',
             'answers' => 'required|array|min:1',
@@ -110,9 +107,8 @@ class QuestController extends Controller
     {
         $quest = Quest::findOrFail($id);
         $categories = Category::pluck('title','id');
-        $statuses = Status::pluck('title','id');
         $answers = $quest->answers->pluck('answer');
-        return view('backEnd.admin.quest.edit', compact('quest', 'categories', 'answers','statuses'));
+        return view('backEnd.admin.quest.edit', compact('quest', 'categories', 'answers'));
     }
 
     /**
@@ -126,7 +122,7 @@ class QuestController extends Controller
     {
         $this->validate($request, [
             'category_id' => 'required',
-            'status_id' => 'required',
+            'status' => 'required',
             'title' => 'required',
             'question' => 'required',
             'answers' => 'required|array|min:1',
@@ -159,7 +155,6 @@ class QuestController extends Controller
         {
             if($answer != null)
             {
-                $answer = strtolower($answer);
                 Answer::create(['quest_id' => $id, 'answer' => $answer]);
             }
         }

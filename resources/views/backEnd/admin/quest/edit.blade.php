@@ -22,13 +22,13 @@ Edit Quest
             {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
         </div> 
     </div>
-    <div class="form-group {{ $errors->has('status_id') ? 'has-error' : ''}}">
-        {!! Form::label('status_id', 'Status: ', ['class' => 'col-sm-4 control-label']) !!}
-        <div class="col-sm-5">
-            {!! Form::select('status_id',$statuses, null,['class' => 'form-control', 'required' => 'required']) !!}
-            {!! $errors->first('status_id', '<p class="help-block">:message</p>') !!}
-        </div>
+    <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
+    {!! Form::label('status', 'Status: ', ['class' => 'col-sm-4 control-label']) !!}
+    <div class="col-sm-5">
+        {!! Form::select('status',['game' => 'Game', 'train' => 'Train'], $quest->status,['class' => 'form-control', 'required' => 'required']) !!}
+        {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
     </div>
+</div>
     <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
         {!! Form::label('title', 'Title: ', ['class' => 'col-sm-4 control-label']) !!}
         <div class="col-sm-5">

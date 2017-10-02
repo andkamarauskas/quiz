@@ -16,15 +16,13 @@ class CreateQuestsTable extends Migration
         Schema::create('quests', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned();
-            $table->integer('status_id')->unsigned();
             $table->string('title');
             $table->string('question');
-
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade')->onUpdate('cascade');
         });
 
     }
