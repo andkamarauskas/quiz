@@ -30,4 +30,8 @@ class Train extends Model
         $quests->getQuery()->where('used', 0);
         return $quests;
     }
+    public function get_train_quests()
+    {
+        return $this->hasMany('App\TrainQuest');
+    }
 }

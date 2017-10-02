@@ -31,5 +31,6 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/train/start', 'TrainController@start')->name('train.start');
 	Route::get('/train/play', 'TrainController@play')->name('train.play');
 	Route::post('/train/next', 'TrainController@next')->name('train.next');
-	
+	Route::get('/train/results/{train_id}', 'TrainController@results')->name('train.results');
+
 });
