@@ -28,4 +28,8 @@ class TrainQuest extends Model
     {
     	return $this->belongsTo('App\Quest');
     }
+    public function user_answers()
+    {
+        return $this->hasMany('App\UserAnswer');
+    }
 }
