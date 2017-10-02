@@ -18,7 +18,7 @@ class UserAnswer extends Model
      *
      * @var array
      */
-    protected $fillable = ['trai_quest_id', 'answer'];
+    protected $fillable = ['train_quest_id', 'answer'];
 
     public function train_quest()
     {

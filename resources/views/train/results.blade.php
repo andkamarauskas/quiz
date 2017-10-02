@@ -27,6 +27,11 @@
                             <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $train_quest->quest->id . '.jpg') }}">
                             <p>
                                 <strong>Your Answers:</strong>
+                                <ul>
+                                    @foreach($train_quest->user_answers as $answer)
+                                    <li>{{$answer->answer}}</li>
+                                    @endforeach
+                                </ul>
                             </p>
                         </div>
                         <div class="col-md-6">

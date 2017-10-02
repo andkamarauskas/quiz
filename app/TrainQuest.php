@@ -30,6 +30,6 @@ class TrainQuest extends Model
     }
     public function user_answers()
     {
-        return $this->hasMany('App\UserAnswer');
+        return $this->hasMany('App\UserAnswer','train_quest_id');
     }
 }

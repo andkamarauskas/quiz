@@ -7,6 +7,7 @@ use Auth;
 use App\Quest;
 use App\Train;
 use App\TrainQuest;
+use App\UserAnswer;
 
 class TrainController extends Controller
 {
@@ -99,12 +100,15 @@ class TrainController extends Controller
 
         foreach ($available_quests as $key => $train_quest)
         {
+            
             if($train_quest->quest->id == $request->quest_id)
             {
                 $user_answers = explode(',', $request->answers);
                 $right_answers = $train_quest->quest->answers;
-                foreach ($right_answers as $right_answer) {
-                    foreach ($user_answers as $key => $user_answer) {
+
+                foreach ($user_answers as $key => $user_answer) {
+                    UserAnswer::create(['train_quest_id' => $train_quest->id, 'answer' => $user_answer]);
+                    foreach ($right_answers as $right_answer) {
                         if($right_answer->answer == $user_answer)
                         {
                             $train_quest->correct = true;
@@ -124,6 +128,9 @@ class TrainController extends Controller
         $correct_answers_num = TrainQuest::where('train_id',$train_id)
                              ->where('correct', true)->count();
         $train_quests = $train->get_train_quests;
+        // foreach ($train_quests as $key => $value) {
+        //     dd($value);
+        // }
         return view('train.results',['correct_answers_num' => $correct_answers_num, 'train_quests' => $train_quests]);
     }
 }
