@@ -26,10 +26,13 @@
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="#">CRUD App</a>
+	            <a class="navbar-brand" href="#">QUIZ admin</a>
 	        </div>
 
-			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+			<div class="collapse navbar-collapse " id="navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/home') }}">Home</a></li>
+				</ul>
 				<ul class="nav navbar-nav navbar-right">
 						<li><a href="{{ url('/admin/category') }}">Categories</a></li>
 						<li><a href="{{ url('/admin/quest') }}">Quests</a></li>

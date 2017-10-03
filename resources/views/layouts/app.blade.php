@@ -38,6 +38,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+                        <li><a href="{{ route('train.index') }}">Train</a></li>
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -53,6 +55,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ route('quest.index') }}">Admin Panel</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
