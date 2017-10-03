@@ -110,6 +110,7 @@ class TrainController extends Controller
 
                 foreach ($user_answers as $key => $user_answer) {
                     UserAnswer::create(['train_quest_id' => $train_quest->id, 'answer' => $user_answer]);
+                    
                     foreach ($right_answers as $right_answer) {
                         if($right_answer->answer == $user_answer)
                         {

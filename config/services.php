@@ -34,5 +34,10 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'google' => [
+       'client_id' => '192535710651-vfmpplujt3e6kr0kr9204cqskano714g.apps.googleusercontent.com',
+       'client_secret' => 'CMuskA8CTk2RHjpaiWWdc858',
+        'redirect' => 'http://localhost/quiz/public/auth/google/callback', //This must be same as your API callback address
+    ],
 
 ];

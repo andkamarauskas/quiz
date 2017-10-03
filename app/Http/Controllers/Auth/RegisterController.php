@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Laravel\Socialite\Facades\Socialite as Socialite;
 
 class RegisterController extends Controller
 {
@@ -68,4 +69,36 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    public function google() {
+
+       return Socialite::driver('google')->redirect();
+   }
+
+
+
+   public function googleCallback() { 
+    try{ 
+       $google = Socialite::driver('google')->user(); 
+    }
+    catch(Exception $e){ 
+       return redirect('/'); 
+   } 
+
+   $user = User::where('google_id', $google->getId())->first();
+
+   if(!$user){ 
+       $user = User::create([ 
+           'google_id' => $google->getId(), 
+           'name' => $google->getName(), 
+           'email' => $google->getEmail(), 
+           'password' => bcrypt($google->getId()), 
+           'profile_pic' => $google->getAvatar(), 
+       ]); 
+   } 
+
+
+   auth()->login($user);
+#return redirect()->to('/home'); 
+   return redirect()->intended('/'); 
+}
 }
