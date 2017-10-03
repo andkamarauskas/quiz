@@ -103,7 +103,9 @@ class TrainController extends Controller
             
             if($train_quest->quest->id == $request->quest_id)
             {
-                $user_answers = explode(',', $request->answers);
+                $user_answers = preg_replace('/\s+/', '', $request->answers);
+                $user_answers = explode(',', $user_answers);
+                $user_answers = array_filter($user_answers, function($value) { return $value !== ''; });
                 $right_answers = $train_quest->quest->answers;
 
                 foreach ($user_answers as $key => $user_answer) {
