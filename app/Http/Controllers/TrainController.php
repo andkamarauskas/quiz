@@ -130,9 +130,6 @@ class TrainController extends Controller
         $correct_answers_num = TrainQuest::where('train_id',$train_id)
                              ->where('correct', true)->count();
         $train_quests = $train->get_train_quests;
-        // foreach ($train_quests as $key => $value) {
-        //     dd($value);
-        // }
         return view('train.results',['correct_answers_num' => $correct_answers_num, 'train_quests' => $train_quests]);
     }
 }

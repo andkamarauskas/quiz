@@ -1,8 +1,12 @@
+
 img{
 	margin-bottom: 25px;
 	display: block;
-    margin: auto;
+	margin: auto;
 	max-height: 350px;
 }
 .results-img{
+}
+#counter_text{
+	font-size: 1.5em;
 }
