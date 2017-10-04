@@ -1,3 +1,2 @@
 ***Creating quest, make selected image prieview.
 
-***Create question status table, principe like categories

@@ -26,25 +26,32 @@ class TrainController extends Controller
     public function start()
     {
         $exist_train =Train::where('user_id', Auth::user()->id)
-                        ->where('active', true)->first();
+        ->where('active', true)->first();
         if($exist_train)
         {
             return redirect()->route('train.play');
         }
         else
         {
-            $train = Train::create(['user_id' => Auth::user()->id]);
-
             $quests_for_train = Quest::where('status','train')
             ->orderByRaw("RAND()")
             ->limit(10)
             ->get();
-            
-            foreach ($quests_for_train as $key => $quest) {
-                TrainQuest::create(['train_id' => $train->id, 'quest_id' => $quest->id]);
+
+            if(count($quests_for_train)>0)
+            {
+                $train = Train::create(['user_id' => Auth::user()->id]);
+                
+                foreach ($quests_for_train as $key => $quest) {
+                    TrainQuest::create(['train_id' => $train->id, 'quest_id' => $quest->id]);
+                }   
+                return redirect()->route('train.play');
+            }
+            else
+            {
+                return redirect()->back()->with('error','No Available Quests For Train');
             }
 
-            return redirect()->route('train.play');
         }
     }
     /**
@@ -100,7 +107,7 @@ class TrainController extends Controller
 
         foreach ($available_quests as $key => $train_quest)
         {
-            
+
             if($train_quest->quest->id == $request->quest_id)
             {
                 $user_answers = preg_replace('/\s+/', '', $request->answers);
@@ -129,7 +136,7 @@ class TrainController extends Controller
     {
         $train = Train::where('id',$train_id)->first();
         $correct_answers_num = TrainQuest::where('train_id',$train_id)
-                             ->where('correct', true)->count();
+        ->where('correct', true)->count();
         $train_quests = $train->get_train_quests;
         return view('train.results',['correct_answers_num' => $correct_answers_num, 'train_quests' => $train_quests]);
     }

@@ -38,3 +38,6 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/train/results/{train_id}', 'TrainController@results')->name('train.results');
 
 });
+Route::group(['middleware' => ['web']], function () {
+	Route::resource('admin/quiz', 'Admin\\QuizController');
+});
