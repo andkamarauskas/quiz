@@ -25,4 +25,8 @@ class Quiz extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
+    public function quests()
+    {
+        return $this->belongsToMany('App\Quest');
+    }
 }

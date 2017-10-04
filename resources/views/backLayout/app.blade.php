@@ -9,6 +9,7 @@
 	<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet"> 
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 	<style>
 		body {
 			padding-top: 70px;

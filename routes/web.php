@@ -23,22 +23,16 @@ Route::get('auth/facebook/callback', 'Auth\RegisterController@facebookCallback')
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => ['web']], function () {
-	Route::resource('admin/category', 'Admin\\CategoryController');
-});
-Route::group(['middleware' => ['web']], function () {
-	Route::resource('admin/quest', 'Admin\\QuestController');
-});
-
 Route::group(['middleware' => ['auth']], function() {
+	Route::resource('admin/quiz', 'Admin\\QuizController');
+	Route::resource('admin/quest', 'Admin\\QuestController');
+	Route::resource('admin/category', 'Admin\\CategoryController');
+	
 	Route::get('/train', 'TrainController@index')->name('train.index');
 	Route::get('/train/start', 'TrainController@start')->name('train.start');
 	Route::get('/train/play', 'TrainController@play')->name('train.play');
 	Route::post('/train/next', 'TrainController@next')->name('train.next');
 	Route::get('/train/results/{train_id}', 'TrainController@results')->name('train.results');
 
+	Route::get('quest/livesearch','Admin\QuizController@liveSearch');       
 });
-Route::group(['middleware' => ['web']], function () {
-	Route::resource('admin/quiz', 'Admin\\QuizController');
-});
-Route::get('quest/livesearch','Admin\QuizController@liveSearch');       

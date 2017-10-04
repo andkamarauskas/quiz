@@ -46,10 +46,10 @@ Quiz
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Find Quests</div>
+                <div class="panel-heading">Find And Add Quests To Quiz</div>
                 <div class="panel-body">
                     <input type="text" autocomplete="off" id="search" class="form-control " placeholder="Enter quest title">
-                    <div id="txtHint" class="title-color"  style="padding-top:10px; font-size: 0.75em" >
+                    <div id="search-results" >
                     </div>
                 </div>
             </div>
@@ -66,14 +66,14 @@ Quiz
             var str=  $("#search").val();
             if(str == "")
             {
-                $( "#txtHint" ).html("<b>Quests will be listed here</b>"); 
+                $( "#search-results" ).html("<b>Quests will be listed here</b>"); 
             }
             else
             {
                 $.get( "{{ url('quest/livesearch?id=') }}"+str, function( data )
                 {
                     console.log(data);
-                    $('#txtHint').html(data); 
+                    $('#search-results').html(data); 
                 });
             }
         });  

@@ -9,6 +9,7 @@
         <tr>
             <td>{{ $quest->title }}</td>
             <td>{{ $quest->question}}</td>
+            <td><a href="#" class="btn btn-warning btn-xs">Add</a></td>
         </tr>
         @endforeach
         @endif

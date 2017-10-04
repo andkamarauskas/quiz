@@ -16,11 +16,11 @@ class CreateQuizzesTable extends Migration
             Schema::create('quizzes', function(Blueprint $table) {
                 $table->increments('id');
                 $table->string('title');
-$table->text('about');
-$table->integer('persons_num');
-$table->integer('quests_num');
-$table->date('date');
-$table->time('time');
+                $table->text('about');
+                $table->integer('persons_num');
+                $table->integer('quests_num');
+                $table->date('date');
+                $table->time('time');
 
                 $table->timestamps();
                 $table->softDeletes();

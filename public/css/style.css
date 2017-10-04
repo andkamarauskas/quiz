@@ -27,3 +27,8 @@ img{
   position: relative;
   z-index: 998;
 }
+#search-results
+{
+  padding-top: 15px;
+  font-size: 0.75em;
+}
