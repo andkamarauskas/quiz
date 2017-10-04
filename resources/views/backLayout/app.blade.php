@@ -37,6 +37,7 @@
 				<ul class="nav navbar-nav navbar-right">
 						<li><a href="{{ url('/admin/category') }}">Categories</a></li>
 						<li><a href="{{ url('/admin/quest') }}">Quests</a></li>
+						<li><a href="{{ url('/admin/quiz') }}">Quizzes</a></li>
 					@if (Auth::guest())
 						<li><a href="{{ url('/login') }}">Login</a></li>
 						<li><a href="{{ url('/register') }}">Register</a></li>
@@ -59,6 +60,7 @@
 
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 	@yield('scripts')

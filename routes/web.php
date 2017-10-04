@@ -41,3 +41,4 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['middleware' => ['web']], function () {
 	Route::resource('admin/quiz', 'Admin\\QuizController');
 });
+Route::get('quest/livesearch','Admin\QuizController@liveSearch');       

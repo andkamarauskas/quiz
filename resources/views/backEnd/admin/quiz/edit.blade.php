@@ -5,7 +5,7 @@ Edit Quiz
 
 @section('content')
 
-    <h1>Edit Quiz</h1>
+    <h1>Edit Quiz <a href="{{ url('admin/quiz')}}" class="btn btn-success pull-right">Back</a></h1>
     <hr/>
 
     {!! Form::model($quiz, [

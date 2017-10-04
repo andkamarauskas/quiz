@@ -6,9 +6,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Quiz;
+use App\Quest;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use Response;
 
 class QuizController extends Controller
 {
@@ -117,6 +119,21 @@ class QuizController extends Controller
         Session::flash('status', 'success');
 
         return redirect('admin/quiz');
+    }
+
+    public function liveSearch(Request $request)
+    {
+        $search = $request->id;
+        if (is_null($search))
+        {
+            return view('admin.quiz.show');        
+        }
+        else
+        {
+            $quests = Quest::where('title','LIKE',"%{$search}%")->get();
+            
+            return view('backEnd.admin.quiz.livesearch')->with('quests',$quests);
+        }
     }
 
 }

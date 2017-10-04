@@ -10,14 +10,17 @@ Quiz
         <table class="table table-bordered table-striped table-hover" id="tbladmin/quiz">
             <thead>
                 <tr>
-                    <th>ID</th><th>Title</th><th>About</th><th>Persons Num</th><th>Actions</th>
+                    <th>ID</th><th>Title</th><th>About</th><th>Persons Num</th><th>Date</th><th>Time</th><th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             @foreach($quiz as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
-                    <td><a href="{{ url('admin/quiz', $item->id) }}">{{ $item->title }}</a></td><td>{{ $item->about }}</td><td>{{ $item->persons_num }}</td>
+                    <td><a href="{{ url('admin/quiz', $item->id) }}">{{ $item->title }}</a></td><td>{{ $item->about }}</td>
+                    <td>{{ $item->persons_num }}</td>
+                    <td>{{ $item->date }}</td>
+                    <td>{{ $item->time }}</td>
                     <td>
                         <a href="{{ url('admin/quiz/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
                         {!! Form::open([
@@ -34,9 +37,7 @@ Quiz
         </table>
     </div>
 
-@endsection
 
-@section('scripts')
 <script type="text/javascript">
     $(document).ready(function(){
         $('#tbladmin/quiz').DataTable({
@@ -51,3 +52,4 @@ Quiz
     });
 </script>
 @endsection
+

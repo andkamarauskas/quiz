@@ -5,7 +5,7 @@ Create new Quiz
 
 @section('content')
 
-    <h1>Create New Quiz</h1>
+    <h1>Create New Quiz <a href="{{ url('admin/quiz')}}" class="btn btn-success pull-right">Back</a></h1>
     <hr/>
 
     {!! Form::open(['url' => 'admin/quiz', 'class' => 'form-horizontal']) !!}
