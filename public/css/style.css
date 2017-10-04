@@ -10,3 +10,20 @@ img{
 #counter_text{
 	font-size: 1.5em;
 }
+.inset {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: transparent !important;
+  z-index: 999;
+}
+
+.inset img {
+	padding: 3px;
+  border-radius: inherit;
+  width: inherit;
+  height: inherit;
+  display: block;
+  position: relative;
+  z-index: 998;
+}

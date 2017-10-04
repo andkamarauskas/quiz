@@ -69,36 +69,67 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-    public function google() {
-
-       return Socialite::driver('google')->redirect();
-   }
-
-
-
-   public function googleCallback() { 
-    try{ 
-       $google = Socialite::driver('google')->user(); 
+    public function google() 
+    {
+        return Socialite::driver('google')->redirect();
     }
-    catch(Exception $e){ 
-       return redirect('/'); 
-   } 
+    public function facebook() 
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
 
-   $user = User::where('google_id', $google->getId())->first();
+    public function googleCallback() 
+    {
+        try
+        {
+            $google = Socialite::driver('google')->user(); 
+        }
+        catch(Exception $e)
+        {
+            return redirect('/'); 
+        } 
 
-   if(!$user){ 
-       $user = User::create([ 
-           'google_id' => $google->getId(), 
-           'name' => $google->getName(), 
-           'email' => $google->getEmail(), 
-           'password' => bcrypt($google->getId()), 
-           'profile_pic' => $google->getAvatar(), 
-       ]); 
-   } 
+        $user = User::where('social_id', $google->getId())->first();
 
+        if(!$user)
+        {
+            $user = User::create([ 
+               'social_id' => $google->getId(), 
+               'name' => $google->getName(), 
+               'email' => $google->getEmail(), 
+               'password' => bcrypt($google->getId()), 
+               'profile_pic' => $google->getAvatar(), 
+           ]); 
+        } 
+        auth()->login($user);
+        #return redirect()->to('/home'); 
+        return redirect()->intended('/'); 
+    }
 
-   auth()->login($user);
-#return redirect()->to('/home'); 
-   return redirect()->intended('/'); 
-}
+    public function facebookCallback() 
+    {
+        try
+        {
+            $facebook = Socialite::driver('facebook')->user(); 
+        }
+        catch(Exception $e)
+        {
+            return redirect('/'); 
+        } 
+        $user = User::where('social_id', $facebook->getId())->first();
+
+        if(!$user)
+        {
+            $user = User::create([ 
+               'social_id' => $facebook->getId(), 
+               'name' => $facebook->getName(), 
+               'email' => $facebook->getEmail(), 
+               'password' => bcrypt($facebook->getId()), 
+               'profile_pic' => $facebook->getAvatar(), 
+           ]); 
+        } 
+        auth()->login($user);
+        #return redirect()->to('/home'); 
+        return redirect()->intended('/'); 
+    }
 }

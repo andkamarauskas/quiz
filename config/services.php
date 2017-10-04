@@ -39,5 +39,10 @@ return [
        'client_secret' => 'CMuskA8CTk2RHjpaiWWdc858',
         'redirect' => 'http://localhost/quiz/public/auth/google/callback', //This must be same as your API callback address
     ],
+    'facebook' => [
+       'client_id' => '119683385379654',
+       'client_secret' => 'e94f1350364458105de08bf2e9b6d873',
+        'redirect' => 'http://localhost/quiz/public/auth/facebook/callback', //This must be same as your API callback address
+    ],
 
 ];

@@ -66,6 +66,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
+                                <a href="{{ url('/auth/google') }}" class="btn btn-danger ">Google</a>
                             </div>
                         </div>
                     </form>
