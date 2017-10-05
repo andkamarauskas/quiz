@@ -35,5 +35,6 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/train/results/{train_id}', 'TrainController@results')->name('train.results');
 
 	Route::get('quest/livesearch','Admin\QuizController@liveSearch');      
+	Route::get('quest/list','Admin\QuizController@questList');      
 	Route::get('quest/attach','Admin\QuizController@attachQuest')->name('quiz.attach');    
 });

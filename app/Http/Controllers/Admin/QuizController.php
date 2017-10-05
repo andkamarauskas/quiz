@@ -133,7 +133,7 @@ class QuizController extends Controller
         {
             $quests = Quest::where('title','LIKE',"%{$search}%")->get();
             
-            return view('backEnd.admin.quiz.livesearch',['quests' => $quests , 'quiz_id' => $request->quiz_id]);
+            return view('backEnd.admin.quiz.livesearch',['quests' => $quests ]);
         }
     }
     public function attachQuest(Request $request)
@@ -149,7 +149,11 @@ class QuizController extends Controller
             $quiz = Quiz::find($quiz_id);
             $quiz->quests()->attach($quest);
         }
+    }
+    public function questList(Request $request)
+    {
+        $quiz = Quiz::find($request->quiz_id);
 
-
+        return view('backEnd.admin.quiz.questslist',['quiz' => $quiz ]);
     }
 }

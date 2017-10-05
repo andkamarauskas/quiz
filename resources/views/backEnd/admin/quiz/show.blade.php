@@ -58,23 +58,7 @@ Quiz
             <div class="panel panel-default">
                 <div class="panel-heading">Added Quests</div>
                 <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover">
-                            <tr>
-                                <th>Title</th>
-                                <th>Question</th>
-                            </tr>
-                            @if (isset($quiz->quests) && count($quiz->quests) > 0)
-                            @foreach( $quiz->quests as $quest )
-                            <tr>
-                                <td>{{ $quest->title }}</td>
-                                <td>{{ $quest->question}}</td>
-                                <!-- <td><button id="" class="btn btn-warning btn-xs" value="{{$quest->id}}" onclick="add(this.value);">Add</button></td> -->
-                            </tr>
-                            @endforeach
-                            @endif
-                        </table>
-                    </div>
+                    <div id="quests-list"></div>
                 </div>
             </div>
         </div>
@@ -86,6 +70,8 @@ Quiz
 <script>
 
     $(document).ready(function(){
+        get_quests_list();
+
         $("#search").keyup(function(){
             var str=  $("#search").val();
             if(str == "")
@@ -94,13 +80,27 @@ Quiz
             }
             else
             {
-                $.get( "{{ url('quest/livesearch') }}",{ "quiz_id" : {{$quiz->id}} , "str" : str}, function( data )
+                $.get( "{{ url('quest/livesearch') }}",{ "str" : str}, function( data )
                 {
-                    $('#search-results').html(data); 
+                    $('#search-results').html(data);
                 });
             }
         });
 
-    }); 
+    });
+    function add(quest_id)
+    {
+        $.get( "{{ url('quest/attach') }}",{ "quest_id" : quest_id , "quiz_id" : {{$quiz->id}} }, function( data )
+        {
+            get_quests_list();
+        });
+    }
+    function get_quests_list()
+    {
+        $.get( "{{ url('quest/list') }}",{ "quiz_id" : {{$quiz->id}} }, function( data )
+                {
+                    $('#quests-list').html(data);
+                });
+    }
 </script>
 @endsection
