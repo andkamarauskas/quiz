@@ -44,12 +44,36 @@ Quiz
         </table>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Find And Add Quests To Quiz</div>
                 <div class="panel-body">
                     <input type="text" autocomplete="off" id="search" class="form-control " placeholder="Enter quest title">
                     <div id="search-results" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Added Quests</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <tr>
+                                <th>Title</th>
+                                <th>Question</th>
+                            </tr>
+                            @if (isset($quiz->quests) && count($quiz->quests) > 0)
+                            @foreach( $quiz->quests as $quest )
+                            <tr>
+                                <td>{{ $quest->title }}</td>
+                                <td>{{ $quest->question}}</td>
+                                <!-- <td><button id="" class="btn btn-warning btn-xs" value="{{$quest->id}}" onclick="add(this.value);">Add</button></td> -->
+                            </tr>
+                            @endforeach
+                            @endif
+                        </table>
                     </div>
                 </div>
             </div>
@@ -70,12 +94,13 @@ Quiz
             }
             else
             {
-                $.get( "{{ url('quest/livesearch?id=') }}"+str,{ quiz_id:{{$quiz->id}} }, function( data )
+                $.get( "{{ url('quest/livesearch') }}",{ "quiz_id" : {{$quiz->id}} , "str" : str}, function( data )
                 {
                     $('#search-results').html(data); 
                 });
             }
-        });  
+        });
+
     }); 
 </script>
 @endsection

@@ -124,7 +124,7 @@ class QuizController extends Controller
 
     public function liveSearch(Request $request)
     {
-        $search = $request->id;
+        $search = $request->str;
         if (is_null($search))
         {
             return view('admin.quiz.show');        
@@ -136,8 +136,10 @@ class QuizController extends Controller
             return view('backEnd.admin.quiz.livesearch',['quests' => $quests , 'quiz_id' => $request->quiz_id]);
         }
     }
-    public function attachQuest($quest_id, $quiz_id)
+    public function attachQuest(Request $request)
     {
+        $quiz_id = $request->quiz_id;
+        $quest_id = $request->quest_id;
         $quest_quiz = QuizQuest::where('quiz_id', $quiz_id)
                                ->where('quest_id',$quest_id)
                                ->first();
@@ -147,7 +149,7 @@ class QuizController extends Controller
             $quiz = Quiz::find($quiz_id);
             $quiz->quests()->attach($quest);
         }
-        
+
 
     }
 }
