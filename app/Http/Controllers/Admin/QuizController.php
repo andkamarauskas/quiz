@@ -127,12 +127,11 @@ class QuizController extends Controller
         $search = $request->str;
         if (is_null($search))
         {
-            return view('admin.quiz.show');        
+            return 'no quests';
         }
         else
         {
             $quests = Quest::where('title','LIKE',"%{$search}%")->get();
-            
             return view('backEnd.admin.quiz.livesearch',['quests' => $quests ]);
         }
     }
@@ -140,15 +139,31 @@ class QuizController extends Controller
     {
         $quiz_id = $request->quiz_id;
         $quest_id = $request->quest_id;
-        $quest_quiz = QuizQuest::where('quiz_id', $quiz_id)
-                               ->where('quest_id',$quest_id)
-                               ->first();
-        if(!$quest_quiz)
+        $quiz = Quiz::find($quiz_id);
+        $quest = Quest::find($quest_id);
+
+        if(is_null($quiz) || is_null($quest))
         {
-            $quest = Quest::find($quest_id);
-            $quiz = Quiz::find($quiz_id);
-            $quiz->quests()->attach($quest);
+            return "no quiz or/and quest id";
         }
+        else
+        {
+            $exist = $quiz->quests()->find($quest_id);
+            if(is_null($exist))
+            {
+                $quiz->quests()->attach($quest);
+            }
+        }
+        
+    }
+    public function detachQuest(Request $request)
+    {
+        $quiz_id = $request->quiz_id;
+        $quest_id = $request->quest_id;
+
+        $quest = Quest::find($quest_id);
+        $quiz = Quiz::find($quiz_id);
+        $quiz->quests()->detach($quest);
     }
     public function questList(Request $request)
     {

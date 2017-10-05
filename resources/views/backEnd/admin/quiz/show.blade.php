@@ -70,7 +70,7 @@ Quiz
 <script>
 
     $(document).ready(function(){
-        get_quests_list();
+        get_added_quests();
 
         $("#search").keyup(function(){
             var str=  $("#search").val();
@@ -92,10 +92,17 @@ Quiz
     {
         $.get( "{{ url('quest/attach') }}",{ "quest_id" : quest_id , "quiz_id" : {{$quiz->id}} }, function( data )
         {
-            get_quests_list();
+            get_added_quests();
         });
     }
-    function get_quests_list()
+    function remove(quest_id)
+    {
+        $.get( "{{ url('quest/detach') }}",{ "quest_id" : quest_id , "quiz_id" : {{$quiz->id}} }, function( data )
+        {
+            get_added_quests();
+        });
+    }
+    function get_added_quests()
     {
         $.get( "{{ url('quest/list') }}",{ "quiz_id" : {{$quiz->id}} }, function( data )
                 {

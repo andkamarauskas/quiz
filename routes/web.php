@@ -37,4 +37,5 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('quest/livesearch','Admin\QuizController@liveSearch');      
 	Route::get('quest/list','Admin\QuizController@questList');      
 	Route::get('quest/attach','Admin\QuizController@attachQuest')->name('quiz.attach');    
+	Route::get('quest/detach','Admin\QuizController@detachQuest')->name('quiz.detach');    
 });
