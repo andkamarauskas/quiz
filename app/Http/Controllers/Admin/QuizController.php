@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Quiz;
 use App\Quest;
+use App\QuizQuest;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -132,8 +133,21 @@ class QuizController extends Controller
         {
             $quests = Quest::where('title','LIKE',"%{$search}%")->get();
             
-            return view('backEnd.admin.quiz.livesearch')->with('quests',$quests);
+            return view('backEnd.admin.quiz.livesearch',['quests' => $quests , 'quiz_id' => $request->quiz_id]);
         }
     }
+    public function attachQuest($quest_id, $quiz_id)
+    {
+        $quest_quiz = QuizQuest::where('quiz_id', $quiz_id)
+                               ->where('quest_id',$quest_id)
+                               ->first();
+        if(!$quest_quiz)
+        {
+            $quest = Quest::find($quest_id);
+            $quiz = Quiz::find($quiz_id);
+            $quiz->quests()->attach($quest);
+        }
+        
 
+    }
 }

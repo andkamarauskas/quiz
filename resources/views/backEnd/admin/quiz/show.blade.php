@@ -70,9 +70,8 @@ Quiz
             }
             else
             {
-                $.get( "{{ url('quest/livesearch?id=') }}"+str, function( data )
+                $.get( "{{ url('quest/livesearch?id=') }}"+str,{ quiz_id:{{$quiz->id}} }, function( data )
                 {
-                    console.log(data);
                     $('#search-results').html(data); 
                 });
             }
