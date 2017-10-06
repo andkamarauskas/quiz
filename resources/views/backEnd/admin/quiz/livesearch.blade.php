@@ -9,7 +9,7 @@
         <tr>
             <td>{{ $quest->title }}</td>
             <td>{{ $quest->question}}</td>
-            <td><button id="" class="btn btn-warning btn-xs" value="{{$quest->id}}" onclick="add(this.value);">Add</button></td>
+            <td><button id="" class="btn btn-primary btn-xs" value="{{$quest->id}}" onclick="add(this.value);">Add</button></td>
         </tr>
         @endforeach
         @endif

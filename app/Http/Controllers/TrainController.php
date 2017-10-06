@@ -75,6 +75,8 @@ class TrainController extends Controller
 
             if (count($available_quests) > 0) {
                 foreach ($available_quests as $key => $train_quest) {
+                    $train_quest->used= true;
+                    $train_quest->save();
                     $quest = $train_quest->quest;
                     return view('train.game',['quest' => $quest, 'train_id' => $train->id]);
                 }
@@ -99,18 +101,17 @@ class TrainController extends Controller
         $this->validate($request, [
             'quest_id' => 'required|integer',
             'train_id' => 'required|integer',
-            'answers' => 'required',
         ]);
-
         $train = Train::where('id',$request->train_id)->first();
         $available_quests = $train->available_quests;
+        $user_answers = $request->answers;
 
         foreach ($available_quests as $key => $train_quest)
         {
 
             if($train_quest->quest->id == $request->quest_id)
             {
-                $user_answers = preg_replace('/\s+/', '', $request->answers);
+                $user_answers = preg_replace('/\s+/', '', $user_answers);
                 $user_answers = explode(',', $user_answers);
                 $user_answers = array_filter($user_answers, function($value) { return $value !== ''; });
                 $right_answers = $train_quest->quest->answers;
@@ -122,11 +123,10 @@ class TrainController extends Controller
                         if($right_answer->answer == $user_answer)
                         {
                             $train_quest->correct = true;
+                            $train_quest->save();
                         }
                     }
                 }
-                $train_quest->used = true;
-                $train_quest->save();
                 return redirect()->route('train.play');
             }
         }

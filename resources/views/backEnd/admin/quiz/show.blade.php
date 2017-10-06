@@ -45,7 +45,7 @@ Quiz
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">Find And Add Quests To Quiz</div>
                 <div class="panel-body">
                     <input type="text" autocomplete="off" id="search" class="form-control " placeholder="Enter quest title">
@@ -55,7 +55,7 @@ Quiz
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel panel-default">
+            <div class="panel panel-warning">
                 <div class="panel-heading">Added Quests</div>
                 <div class="panel-body">
                     <div id="quests-list"></div>

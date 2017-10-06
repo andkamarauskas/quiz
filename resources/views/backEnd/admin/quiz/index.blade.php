@@ -10,7 +10,7 @@ Quiz
         <table class="table table-bordered table-striped table-hover" id="tbladmin/quiz">
             <thead>
                 <tr>
-                    <th>ID</th><th>Title</th><th>About</th><th>Persons Num</th><th>Date</th><th>Time</th><th>Actions</th>
+                    <th>ID</th><th>Title</th><th>About</th><th>Persons Num</th><th>Quests Num</th><th>Date</th><th>Time</th><th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,6 +19,7 @@ Quiz
                     <td>{{ $item->id }}</td>
                     <td><a href="{{ url('admin/quiz', $item->id) }}">{{ $item->title }}</a></td><td>{{ $item->about }}</td>
                     <td>{{ $item->persons_num }}</td>
+                    <td>{{ count($item->quests) }} / {{$item->quests_num}}</td>
                     <td>{{ $item->date }}</td>
                     <td>{{ $item->time }}</td>
                     <td>

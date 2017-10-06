@@ -28,9 +28,13 @@
                     <p>
                         <h4>Your Answers:</h4>
                         <ul>
-                            @foreach($train_quest->user_answers as $answer)
-                            <li>{{$answer->answer}}</li>
-                            @endforeach
+                            @if(count($train_quest->user_answers)>0)
+                                @foreach($train_quest->user_answers as $answer)
+                                <li>{{$answer->answer}}</li>
+                                @endforeach
+                            @else
+                                <li>Not Answered</li>
+                            @endif
                         </ul>
                     </p>
                     <strong>Answer</strong>
