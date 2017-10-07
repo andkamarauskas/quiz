@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Quest;
 use App\Category;
 use App\Answer;
+use App\UserQuest;
+use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -174,7 +176,14 @@ class QuestController extends Controller
     public function destroy($id)
     {
         $quest = Quest::findOrFail($id);
+
+        $user = $quest->user->first();
         
+        if(!is_null($user))
+        {
+            $user->quests()->detach($quest);  
+        }
+
         $oldAnswers = $quest->answers;
         foreach ($oldAnswers as $answer) {
             $answer->delete();

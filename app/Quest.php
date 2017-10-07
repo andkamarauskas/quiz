@@ -38,4 +38,8 @@ class Quest extends Model
     {
         return $this->belongsToMany('App\Quiz');
     }
+    public function user()
+    {
+        return $this->belongsToMany('App\User');
+    }
 }

@@ -31,4 +31,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Train');
     }
+    public function quests()
+    {
+        return $this->belongsToMany('App\Quest');
+    }
 }

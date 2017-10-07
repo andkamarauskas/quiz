@@ -10,9 +10,9 @@
                     {{$correct_answers_num}} Your Aswers Was Right
                 </div>
                 <div class="panel-body">
-                   @foreach($train_quests as $key => $train_quest)
+                 @foreach($train_quests as $key => $train_quest)
 
-                   <div class="">
+                 <div class="">
                     <h3 class="text-center">
                         {{$key+1}} {{$train_quest->quest->question}}
                         @if($train_quest->correct)
@@ -21,40 +21,41 @@
                         <div class="text-danger"><strong>You answered wrong</strong></div>
                         @endif
                     </h3>
-                    <strong>Quest</strong>
-                    <div class="results-img">
-                        <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $train_quest->quest->id . '.jpg') }}">
-                    </div>
-                    <p>
-                        <h4>Your Answers:</h4>
-                        <ul>
-                            @if(count($train_quest->user_answers)>0)
-                                @foreach($train_quest->user_answers as $answer)
-                                <li>{{$answer->answer}}</li>
-                                @endforeach
-                            @else
-                                <li>Not Answered</li>
-                            @endif
-                        </ul>
-                    </p>
-                    <strong>Answer</strong>
-                    <div class="results-img">
-                        <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/answer_' . $train_quest->quest->id . '.jpg') }}">
-                    </div>
-                    <p>
-                        <h4>Available Answers:</h4>
-                        <ul>
-                            @foreach($train_quest->quest->answers as $answer)
-                            <li>{{$answer->answer}}</li>
-                            @endforeach
-                        </ul>
-                    </p>
+                   
+                <strong>Quest</strong>
+                <div class="results-img">
+                    <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $train_quest->quest->id . '.jpg') }}">
                 </div>
-                <hr>
-                @endforeach
+                <p>
+                    <h4>Your Answers:</h4>
+                    <ul>
+                        @if(count($train_quest->user_answers)>0)
+                        @foreach($train_quest->user_answers as $answer)
+                        <li>{{$answer->answer}}</li>
+                        @endforeach
+                        @else
+                        <li>Not Answered</li>
+                        @endif
+                    </ul>
+                </p>
+                <strong>Answer</strong>
+                <div class="results-img">
+                    <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/answer_' . $train_quest->quest->id . '.jpg') }}">
+                </div>
+                <p>
+                    <h4>Available Answers:</h4>
+                    <ul>
+                        @foreach($train_quest->quest->answers as $answer)
+                        <li>{{$answer->answer}}</li>
+                        @endforeach
+                    </ul>
+                </p>
             </div>
+            <hr>
+            @endforeach
         </div>
     </div>
+</div>
 </div>
 </div>
 @endsection
