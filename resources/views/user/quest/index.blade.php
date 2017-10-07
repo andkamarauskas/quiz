@@ -18,15 +18,15 @@ Quest
                 @foreach($userQuests as $quest)
                 <tr>
                     <td>{{ $quest->id }}</td>
-                    <td><a href="{{ url('admin/quest', $quest->id) }}">{{ $quest->question }}</a></td>
+                    <td><a href="{{ url('user/quest', $quest->id) }}">{{ $quest->question }}</a></td>
                     <td>{{ $quest->title }}</td>
                     <td>{{ $quest->category->title }}</td>
                     <td>{{ $quest->status }}</td>
                     <td>
-                        <a href="{{ url('admin/quest/' . $quest->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
+                        <a href="{{ url('user/quest/' . $quest->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['admin/quest', $quest->id],
+                            'url' => ['user/quest', $quest->id],
                             'style' => 'display:inline'
                             ]) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}

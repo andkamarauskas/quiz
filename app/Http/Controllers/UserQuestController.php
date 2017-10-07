@@ -1,56 +1,54 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-use App\Quest;
+use Illuminate\Http\Request;
+use Auth;
+use App\User;
 use App\Category;
+use App\Quest;
 use App\Answer;
 use App\UserQuest;
-use App\User;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Session;
-
 use File;
-use Illuminate\Support\Facades\Validator;
-class QuestController extends Controller
-{
 
+class UserQuestController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $quest = Quest::all();
-        return view('backEnd.admin.quest.index', compact('quest'));
+        $user = Auth::user();
+        $userQuests = $user->quests;
+        return view('user.quest.index',compact('userQuests'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        //
         $categories = Category::pluck('title','id');
-        return view('backEnd.admin.quest.create',compact('categories'));
+        return view('user.quest.create',compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        //
         $this->validate($request, [
             'category_id' => 'required',
-            'status' => 'required',
             'title' => 'required',
             'question' => 'required',
             'answers' => 'required|array|min:1',
@@ -59,7 +57,13 @@ class QuestController extends Controller
             'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
         ]);
         $quest = Quest::create($request->all());
-        //next magic, uploads multiple images
+        $quest->status = 'user';
+        $quest->save();
+
+        $user = Auth::user();
+
+        $user->quests()->attach($quest);
+
         if($request->hasFile('images'))
         {          
             foreach ($request->images as $index => $image) {
@@ -81,50 +85,49 @@ class QuestController extends Controller
         Session::flash('message', 'Quest added!');
         Session::flash('status', 'success');
 
-        return redirect('admin/quest');
+        return redirect('user/quest');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $quest = Quest::findOrFail($id);
-
-        return view('backEnd.admin.quest.show', compact('quest'));
+        //
+        $userQuest = Quest::findOrFail($id);
+        return view('user.quest.show', compact('userQuest'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
+        //
         $quest = Quest::findOrFail($id);
         $categories = Category::pluck('title','id');
         $answers = $quest->answers->pluck('answer');
-        return view('backEnd.admin.quest.edit', compact('quest', 'categories', 'answers'));
+        return view('user.quest.edit', compact('quest', 'categories', 'answers'));
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
+        //
         $this->validate($request, [
             'category_id' => 'required',
-            'status' => 'required',
             'title' => 'required',
             'question' => 'required',
             'answers' => 'required|array|min:1',
@@ -148,6 +151,8 @@ class QuestController extends Controller
 
         $quest = Quest::findOrFail($id);
         $quest->update($request->all());
+        $quest->status = 'user';
+        $quest->save();
 
         $oldAnswers = $quest->answers;
         foreach ($oldAnswers as $answer) {
@@ -163,19 +168,22 @@ class QuestController extends Controller
         Session::flash('message', 'Quest updated!');
         Session::flash('status', 'success');
 
-        return redirect('admin/quest');
+        return redirect('user/quest');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+        //
         $quest = Quest::findOrFail($id);
+
+        $user = $quest->user->first();
+        $user->quests()->detach($quest);
 
         $answers = $quest->answers;
         foreach ($answers as $answer) {
@@ -189,7 +197,6 @@ class QuestController extends Controller
         Session::flash('message', 'Quest deleted!');
         Session::flash('status', 'success');
 
-        return redirect('admin/quest');
+        return redirect('user/quest');
     }
-
 }

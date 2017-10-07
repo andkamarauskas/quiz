@@ -39,7 +39,11 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('quest/attach','Admin\QuizController@attachQuest')->name('quest.attach');    
 	Route::get('quest/detach','Admin\QuizController@detachQuest')->name('quest.detach');
 
-	Route::get('user/quest', 'UserController@questIndex')->name('user.quest.index');   
-	Route::get('user/quest/create', 'UserController@questCreate')->name('user.quest.create');   
-	Route::post('user/quest/store', 'UserController@questStore')->name('user.quest.store');   
+	Route::get('user/quest', 'UserQuestController@index')->name('user.quest.index');   
+	Route::get('user/quest/create', 'UserQuestController@create')->name('user.quest.create');   
+	Route::post('user/quest/store', 'UserQuestController@store')->name('user.quest.store');   
+	Route::get('user/quest/{id}', 'UserQuestController@show')->name('user.quest.show');   
+	Route::get('user/quest/{id}/edit', 'UserQuestController@edit')->name('user.quest.edit');   
+	Route::patch('user/quest/{id}', 'UserQuestController@update')->name('user.quest.update');   
+	Route::delete('user/quest/{id}', 'UserQuestController@destroy')->name('user.quest.destroy');   
 });
