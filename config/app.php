@@ -232,6 +232,7 @@ return [
         'HTML' => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'ImageHelper' => App\Helpers\ImageHelper::class,
+        'AnswerHelper' => App\Helpers\AnswerHelper::class,
 
     ],
 

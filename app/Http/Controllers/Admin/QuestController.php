@@ -11,6 +11,7 @@ use App\Answer;
 use App\UserQuest;
 use App\User;
 use App\Helpers\ImageHelper;
+use App\Helpers\AnswerHelper;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -58,20 +59,16 @@ class QuestController extends Controller
             'images.0' => 'required|mimes:jpeg,jpg|image|max:1000',
             'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
         ]);
+
         $quest = Quest::create($request->all());
+        $quest_id = $quest->id;
 
         if($request->hasFile('images'))
         {          
-            ImageHelper::save_images($request->images,$quest->id);
+            ImageHelper::save_images($request->images,$quest_id);
         }
 
-        foreach ($request->answers as $key => $answer)
-        {
-            if($answer != null)
-            {
-                Answer::create(['quest_id' => $quest->id, 'answer' => $answer]);
-            }
-        }
+        AnswerHelper::save_answers($request->answers,$quest_id);
 
         Session::flash('message', 'Quest added!');
         Session::flash('status', 'success');
@@ -136,18 +133,9 @@ class QuestController extends Controller
         $quest = Quest::findOrFail($id);
         $quest->update($request->all());
 
-        $oldAnswers = $quest->answers;
-        foreach ($oldAnswers as $answer) {
-            $answer->delete();
-        }
-        
-        foreach ($request->answers as $key => $answer)
-        {
-            if($answer != null)
-            {
-                Answer::create(['quest_id' => $id, 'answer' => $answer]);
-            }
-        }
+        AnswerHelper::delete_answers($quest->answers);
+        AnswerHelper::save_answers($request->answers,$id);
+
         Session::flash('message', 'Quest updated!');
         Session::flash('status', 'success');
 
@@ -165,10 +153,8 @@ class QuestController extends Controller
     {
         $quest = Quest::findOrFail($id);
 
-        $answers = $quest->answers;
-        foreach ($answers as $answer) {
-            $answer->delete();
-        }
+        AnswerHelper::delete_answers($quest->answers);
+        
         $quest->delete();
 
         ImageHelper::delete_images($id);
