@@ -10,11 +10,11 @@ use App\Category;
 use App\Answer;
 use App\UserQuest;
 use App\User;
+use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
 
-use File;
 use Illuminate\Support\Facades\Validator;
 class QuestController extends Controller
 {
@@ -59,17 +59,12 @@ class QuestController extends Controller
             'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
         ]);
         $quest = Quest::create($request->all());
-        //next magic, uploads multiple images
+
         if($request->hasFile('images'))
         {          
-            foreach ($request->images as $index => $image) {
-
-                if($index == 0){$imageName = 'quest_';}else{$imageName='answer_';}
-
-                $imageName = $imageName. $quest->id . '.' . $request->file('images')[$index]->getClientOriginalExtension();
-                $request->file('images')[$index]->move( base_path() . '/public/images/quests/', $imageName );
-            }
+            ImageHelper::save_images($request->images,$quest->id);
         }
+
         foreach ($request->answers as $key => $answer)
         {
             if($answer != null)
@@ -133,17 +128,9 @@ class QuestController extends Controller
         ]);
 
         if($request->hasFile('images'))
-        {  
-            File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
-            File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
-
-            foreach ($request->images as $index => $image) {
-
-                if($index == 0){$imageName = 'quest_';}else{$imageName='answer_';}
-
-                $imageName = $imageName. $id . '.' . $request->file('images')[$index]->getClientOriginalExtension();
-                $request->file('images')[$index]->move( base_path() . '/public/images/quests/', $imageName );
-            }
+        { 
+            ImageHelper::delete_images($id);
+            ImageHelper::save_images($request->images,$id);
         }
 
         $quest = Quest::findOrFail($id);
@@ -153,6 +140,7 @@ class QuestController extends Controller
         foreach ($oldAnswers as $answer) {
             $answer->delete();
         }
+        
         foreach ($request->answers as $key => $answer)
         {
             if($answer != null)
@@ -183,8 +171,7 @@ class QuestController extends Controller
         }
         $quest->delete();
 
-        File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
-        File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
+        ImageHelper::delete_images($id);
 
         Session::flash('message', 'Quest deleted!');
         Session::flash('status', 'success');

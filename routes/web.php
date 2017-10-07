@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('quest/attach','Admin\QuizController@attachQuest')->name('quest.attach');    
 	Route::get('quest/detach','Admin\QuizController@detachQuest')->name('quest.detach');
 
-	Route::get('user/quest', 'UserQuestController@index')->name('user.quest.index');   
+	Route::get('user/quest', 'UserQuestController@index')->name('user.quest');   
 	Route::get('user/quest/create', 'UserQuestController@create')->name('user.quest.create');   
 	Route::post('user/quest/store', 'UserQuestController@store')->name('user.quest.store');   
 	Route::get('user/quest/{id}', 'UserQuestController@show')->name('user.quest.show');   

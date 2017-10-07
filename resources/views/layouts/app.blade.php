@@ -66,6 +66,7 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('quest.index') }}">Admin Panel</a></li>
+                            <li><a href="{{ route('user.quest') }}">My Quests</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
