@@ -11,6 +11,8 @@ use App\Answer;
 use App\UserQuest;
 use Session;
 use File;
+use App\Helpers\ImageHelper;
+use App\Helpers\AnswerHelper;
 
 class UserQuestController extends Controller
 {
@@ -59,27 +61,16 @@ class UserQuestController extends Controller
         $quest = Quest::create($request->all());
         $quest->status = 'user';
         $quest->save();
+        $quest_id = $quest->id;
+
+        AnswerHelper::save_answers($request->answers,$quest_id);
 
         $user = Auth::user();
-
         $user->quests()->attach($quest);
 
         if($request->hasFile('images'))
         {          
-            foreach ($request->images as $index => $image) {
-
-                if($index == 0){$imageName = 'quest_';}else{$imageName='answer_';}
-
-                $imageName = $imageName. $quest->id . '.' . $request->file('images')[$index]->getClientOriginalExtension();
-                $request->file('images')[$index]->move( base_path() . '/public/images/quests/', $imageName );
-            }
-        }
-        foreach ($request->answers as $key => $answer)
-        {
-            if($answer != null)
-            {
-                Answer::create(['quest_id' => $quest->id, 'answer' => $answer]);
-            }
+            ImageHelper::save_images($request->images,$quest_id);
         }
 
         Session::flash('message', 'Quest added!');
@@ -135,36 +126,23 @@ class UserQuestController extends Controller
             'images.1' => 'mimes:jpeg,jpg,png | max:1000'
         ]);
 
-        if($request->hasFile('images'))
-        {  
-            File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
-            File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
-
-            foreach ($request->images as $index => $image) {
-
-                if($index == 0){$imageName = 'quest_';}else{$imageName='answer_';}
-
-                $imageName = $imageName. $id . '.' . $request->file('images')[$index]->getClientOriginalExtension();
-                $request->file('images')[$index]->move( base_path() . '/public/images/quests/', $imageName );
-            }
-        }
-
         $quest = Quest::findOrFail($id);
         $quest->update($request->all());
         $quest->status = 'user';
         $quest->save();
 
-        $oldAnswers = $quest->answers;
-        foreach ($oldAnswers as $answer) {
-            $answer->delete();
+        AnswerHelper::delete_answers($quest->answers);
+        AnswerHelper::save_answers($request->answers,$id);
+
+        if($request->hasFile('images'))
+        {  
+            File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
+            File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
+
+            ImageHelper::delete_images($id);
+            ImageHelper::save_images($request->images,$id);
         }
-        foreach ($request->answers as $key => $answer)
-        {
-            if($answer != null)
-            {
-                Answer::create(['quest_id' => $id, 'answer' => $answer]);
-            }
-        }
+
         Session::flash('message', 'Quest updated!');
         Session::flash('status', 'success');
 
@@ -185,14 +163,10 @@ class UserQuestController extends Controller
         $user = $quest->user->first();
         $user->quests()->detach($quest);
 
-        $answers = $quest->answers;
-        foreach ($answers as $answer) {
-            $answer->delete();
-        }
-        $quest->delete();
+        AnswerHelper::delete_answers($quest->answers);
+        ImageHelper::delete_images($id);
 
-        File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
-        File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
+        $quest->delete();
 
         Session::flash('message', 'Quest deleted!');
         Session::flash('status', 'success');

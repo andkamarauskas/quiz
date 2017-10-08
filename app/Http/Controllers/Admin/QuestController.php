@@ -63,12 +63,12 @@ class QuestController extends Controller
         $quest = Quest::create($request->all());
         $quest_id = $quest->id;
 
+        AnswerHelper::save_answers($request->answers,$quest_id);
+
         if($request->hasFile('images'))
         {          
             ImageHelper::save_images($request->images,$quest_id);
         }
-
-        AnswerHelper::save_answers($request->answers,$quest_id);
 
         Session::flash('message', 'Quest added!');
         Session::flash('status', 'success');
@@ -124,17 +124,19 @@ class QuestController extends Controller
             'images.1' => 'mimes:jpeg,jpg,png | max:1000'
         ]);
 
+        $quest = Quest::findOrFail($id);
+        $quest->update($request->all());
+
+        AnswerHelper::delete_answers($quest->answers);
+        AnswerHelper::save_answers($request->answers,$id);
+        
         if($request->hasFile('images'))
         { 
             ImageHelper::delete_images($id);
             ImageHelper::save_images($request->images,$id);
         }
 
-        $quest = Quest::findOrFail($id);
-        $quest->update($request->all());
 
-        AnswerHelper::delete_answers($quest->answers);
-        AnswerHelper::save_answers($request->answers,$id);
 
         Session::flash('message', 'Quest updated!');
         Session::flash('status', 'success');
@@ -152,11 +154,9 @@ class QuestController extends Controller
     public function destroy($id)
     {
         $quest = Quest::findOrFail($id);
-
-        AnswerHelper::delete_answers($quest->answers);
-        
         $quest->delete();
 
+        AnswerHelper::delete_answers($quest->answers);
         ImageHelper::delete_images($id);
 
         Session::flash('message', 'Quest deleted!');
