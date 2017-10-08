@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\User;
 use App\Category;
 use App\Quest;
-use App\Answer;
-use App\UserQuest;
 use Session;
-use File;
 use App\Helpers\ImageHelper;
 use App\Helpers\AnswerHelper;
 
@@ -131,16 +127,11 @@ class UserQuestController extends Controller
         $quest->status = 'user';
         $quest->save();
 
-        AnswerHelper::delete_answers($quest->answers);
-        AnswerHelper::save_answers($request->answers,$id);
+        AnswerHelper::update_answers($request->answers,$quest);
 
         if($request->hasFile('images'))
-        {  
-            File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
-            File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
-
-            ImageHelper::delete_images($id);
-            ImageHelper::save_images($request->images,$id);
+        { 
+            ImageHelper::update_images($request->images,$id);
         }
 
         Session::flash('message', 'Quest updated!');

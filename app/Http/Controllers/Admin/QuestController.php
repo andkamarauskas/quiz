@@ -7,9 +7,6 @@ use App\Http\Controllers\Controller;
 
 use App\Quest;
 use App\Category;
-use App\Answer;
-use App\UserQuest;
-use App\User;
 use App\Helpers\ImageHelper;
 use App\Helpers\AnswerHelper;
 use Illuminate\Http\Request;
@@ -127,13 +124,11 @@ class QuestController extends Controller
         $quest = Quest::findOrFail($id);
         $quest->update($request->all());
 
-        AnswerHelper::delete_answers($quest->answers);
-        AnswerHelper::save_answers($request->answers,$id);
+        AnswerHelper::update_answers($request->answers,$quest);
         
         if($request->hasFile('images'))
         { 
-            ImageHelper::delete_images($id);
-            ImageHelper::save_images($request->images,$id);
+            ImageHelper::update_images($request->images,$id);
         }
 
 

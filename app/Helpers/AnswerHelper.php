@@ -15,10 +15,18 @@ class AnswerHelper {
 			}
 		}  
 	}
+
 	public static function delete_answers($answers)
 	{
 		foreach ($answers as $answer) {
 			$answer->delete();
 		}
+	}
+
+	public static function update_answers($answers,$quest)
+	{
+		$oldAnswers = $quest->answers;
+		self::delete_answers($oldAnswers);
+		self::save_answers($answers,$quest->id);
 	}
 }

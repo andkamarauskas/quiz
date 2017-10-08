@@ -16,9 +16,16 @@ class ImageHelper {
 			$image->move( base_path() . '/public/images/quests/', $imageName );
 		}   
 	}
+
 	public static function delete_images($id)
 	{
 		File::delete(public_path('/images/quests/quest_'. $id .'.jpg'));
 		File::delete(public_path('/images/quests/answer_'. $id .'.jpg'));
+	}
+
+	public static function update_images($images,$id)
+	{
+		self::delete_images($id);
+		self::save_images($images,$id);
 	}
 }
