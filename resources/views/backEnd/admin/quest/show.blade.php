@@ -37,11 +37,11 @@ Quest
     <div class="row">
         <div class="col-md-4">
             <h3>Quest Image</h3>
-            <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $quest->id . '.jpg') }}">
+            <img class="img img-responsive" alt="no-image" src="{{ $quest->image->quest_img }}">
         </div>
         <div class="col-md-4">
             <h3>Answer Image</h3>
-            <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/answer_' . $quest->id . '.jpg') }}">
+            <img class="img img-responsive" alt="no-image" src="{{ $quest->image->answer_img }}">
         </div>
         <div class="col-md-4">
             <h3>Possible Answers</h3>

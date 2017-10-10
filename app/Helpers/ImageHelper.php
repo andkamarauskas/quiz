@@ -31,7 +31,6 @@ class ImageHelper {
 
 	public static function delete_images($image)
 	{
-		// $image = $quest->image;
 		\Cloudder::destroyImage($image->q_public_id);
 		\Cloudder::delete($image->q_public_id);
 		\Cloudder::destroyImage($image->a_public_id);
@@ -39,9 +38,10 @@ class ImageHelper {
 		$image->delete();
 	}
 
-	public static function update_images($images,$id)
+	public static function update_images($images,$quest)
 	{
-		self::delete_images($id);
-		self::save_images($images,$id);
+
+		self::delete_images($quest->image);
+		self::save_images($images,$quest->id);
 	}
 }

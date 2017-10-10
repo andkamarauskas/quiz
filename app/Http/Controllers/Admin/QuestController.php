@@ -128,7 +128,7 @@ class QuestController extends Controller
         
         if($request->hasFile('images'))
         { 
-            ImageHelper::update_images($request->images,$id);
+            ImageHelper::update_images($request->images,$quest);
         }
 
 
