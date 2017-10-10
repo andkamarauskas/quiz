@@ -24,7 +24,7 @@
                    
                 <strong>Quest</strong>
                 <div class="results-img">
-                    <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/quest_' . $train_quest->quest->id . '.jpg') }}">
+                    <img class="img img-responsive" alt="no-image" src="{{ $train_quest->quest->image->quest_img }}">
                 </div>
                 <p>
                     <h4>Your Answers:</h4>
@@ -40,7 +40,7 @@
                 </p>
                 <strong>Answer</strong>
                 <div class="results-img">
-                    <img class="img img-responsive" alt="no-image" src="{{ asset('images/quests/answer_' . $train_quest->quest->id . '.jpg') }}">
+                    <img class="img img-responsive" alt="no-image" src="{{ $train_quest->quest->image->answer_img }}">
                 </div>
                 <p>
                     <h4>Available Answers:</h4>

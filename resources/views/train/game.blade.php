@@ -9,7 +9,7 @@
                 <div class="panel-heading">{{$quest->question}}</div>
 
                 <div class="panel-body">
-                    <img alt="no-image" src="{{ asset('/images/quests/quest_'.$quest->id.'.jpg') }}" class="img-responsive"></img>
+                    <img alt="no-image" src="{{ $quest->image->quest_img }}" class="img-responsive"></img>
                     
                     <h4>Type answers:</h4>
                     {!! Form::open(['url' => 'train/next', 'class' => 'form-horizontal']) !!}
