@@ -20,7 +20,6 @@ class CreateQuestsTable extends Migration
             $table->string('question');
             $table->string('status');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });

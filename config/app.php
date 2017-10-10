@@ -179,6 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
+        JD\Cloudder\CloudderServiceProvider::class,
 
     ],
 
@@ -233,6 +234,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'ImageHelper' => App\Helpers\ImageHelper::class,
         'AnswerHelper' => App\Helpers\AnswerHelper::class,
+        'Cloudder' => JD\Cloudder\Facades\Cloudder::class,
 
     ],
 

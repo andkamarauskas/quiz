@@ -53,8 +53,8 @@ class QuestController extends Controller
             'question' => 'required',
             'answers' => 'required|array|min:1',
             'images' => 'required|array|min:2',
-            'images.0' => 'required|mimes:jpeg,jpg|image|max:1000',
-            'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
+            'images.0' => 'required|mimes:jpeg,jpg,png|image|max:1000',
+            'images.1' => 'required|mimes:jpeg,jpg,png|image|max:1000'
         ]);
 
         $quest = Quest::create($request->all());
@@ -149,10 +149,9 @@ class QuestController extends Controller
     public function destroy($id)
     {
         $quest = Quest::findOrFail($id);
-        $quest->delete();
-
         AnswerHelper::delete_answers($quest->answers);
-        ImageHelper::delete_images($id);
+        ImageHelper::delete_images($quest->image);
+        $quest->delete();
 
         Session::flash('message', 'Quest deleted!');
         Session::flash('status', 'success');
