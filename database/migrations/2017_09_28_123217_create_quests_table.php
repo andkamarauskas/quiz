@@ -18,7 +18,7 @@ class CreateQuestsTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->string('title');
             $table->string('question');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');

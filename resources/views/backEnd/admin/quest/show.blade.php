@@ -5,7 +5,7 @@ Quest
 
 @section('content')
 
-<h1>Quest <a href="{{ url('admin/quest')}}" class="btn btn-success pull-right">Back</a></h1>
+<h1>Quest <a href="{{ URL::previous() }}" class="btn btn-success pull-right">Back</a></h1>
 <div class="table-responsive">
     <table class="table table-bordered table-striped table-hover">
         <thead>

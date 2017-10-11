@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Helpers;
-use File;
+
 use App\Image;
 
 class ImageHelper {

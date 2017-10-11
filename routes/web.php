@@ -24,6 +24,9 @@ Route::get('auth/facebook/callback', 'Auth\RegisterController@facebookCallback')
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
+	Route::get('admin', 'AdminController@index')->name('admin.index');
+	Route::get('admin/quests/approve', 'AdminController@questsToApprove')->name('admin.questsToApprove');
+	Route::get('admin/quests/approve/count', 'AdminController@countToApprove');
 	Route::resource('admin/quiz', 'Admin\\QuizController');
 	Route::resource('admin/quest', 'Admin\\QuestController');
 	Route::resource('admin/category', 'Admin\\CategoryController');

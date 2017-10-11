@@ -5,7 +5,7 @@ Edit Quest
 
 @section('content')
 
-<h1>Edit Quest <a href="{{ url('admin/quest')}}" class="btn btn-success pull-right">Back</a></h1>
+<h1>Edit Quest <a href="{{ URL::previous() }}" class="btn btn-success pull-right">Back</a></h1>
 <hr/>
 
 {!! Form::model($quest, [
@@ -25,7 +25,7 @@ Edit Quest
     <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
     {!! Form::label('status', 'Status: ', ['class' => 'col-sm-4 control-label']) !!}
     <div class="col-sm-5">
-        {!! Form::select('status',['game' => 'Game', 'train' => 'Train'], $quest->status,['class' => 'form-control', 'required' => 'required']) !!}
+        {!! Form::select('status',['game' => 'Game', 'train' => 'Train' , 'user' => 'User'], $quest->status,['class' => 'form-control', 'required' => 'required']) !!}
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

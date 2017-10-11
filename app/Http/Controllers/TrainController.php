@@ -103,10 +103,10 @@ class TrainController extends Controller
             'train_id' => 'required|integer',
         ]);
         $train = Train::where('id',$request->train_id)->first();
-        $available_quests = $train->get_train_quests;
+        $train_quests = $train->get_train_quests;
         $user_answers = $request->answers;
 
-        foreach ($available_quests as $key => $train_quest)
+        foreach ($train_quests as $key => $train_quest)
         {
             if($train_quest->quest->id == $request->quest_id)
             {

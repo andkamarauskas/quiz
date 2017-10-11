@@ -131,7 +131,7 @@ class UserQuestController extends Controller
 
         if($request->hasFile('images'))
         { 
-            ImageHelper::update_images($request->images,$id);
+            ImageHelper::update_images($request->images,$quest);
         }
 
         Session::flash('message', 'Quest updated!');
@@ -155,7 +155,7 @@ class UserQuestController extends Controller
         $user->quests()->detach($quest);
 
         AnswerHelper::delete_answers($quest->answers);
-        ImageHelper::delete_images($id);
+        ImageHelper::delete_images($quest->image);
 
         $quest->delete();
 
