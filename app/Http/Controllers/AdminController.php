@@ -22,4 +22,18 @@ class AdminController extends Controller
     {
     	return Quest::where('status','user')->count();
     }
+    public function questToTrain($id)
+    {
+    	$quest = Quest::findOrFail($id);
+    	$quest->status = 'train';
+    	$quest->save();
+    	return redirect('admin/quests/approve');
+    }
+    public function questToGame($id)
+    {
+    	$quest = Quest::findOrFail($id);
+    	$quest->status = 'game';
+    	$quest->save();
+    	return redirect('admin/quests/approve');
+    }
 }

@@ -25,8 +25,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('admin', 'AdminController@index')->name('admin.index');
+	
 	Route::get('admin/quests/approve', 'AdminController@questsToApprove')->name('admin.questsToApprove');
 	Route::get('admin/quests/approve/count', 'AdminController@countToApprove');
+	Route::get('admin/quest/approve/train/{id}', 'AdminController@questToTrain');
+	Route::get('admin/quest/approve/game/{id}', 'AdminController@questToGame');
+
 	Route::resource('admin/quiz', 'Admin\\QuizController');
 	Route::resource('admin/quest', 'Admin\\QuestController');
 	Route::resource('admin/category', 'Admin\\CategoryController');

@@ -21,6 +21,10 @@ Quest
                 <td> {{ $quest->category->title }}</td>
                 <td> {{ $quest->status }}</td>
                 <td>
+                    @if( $quest->status == 'user')
+                    <a href="{{ url('admin/quest/approve/train/' . $quest->id ) }}" class="btn btn-warning btn-xs">To Train</a> 
+                    <a href="{{ url('admin/quest/approve/game/' . $quest->id ) }}" class="btn btn-success btn-xs">To Game</a>
+                    @endif
                     <a href="{{ url('admin/quest/' . $quest->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a> 
                     {!! Form::open([
                         'method'=>'DELETE',
