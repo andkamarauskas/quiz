@@ -41,18 +41,4 @@ Quest
 
     @endsection
 
-    @section('scripts')
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#tbladmin/quest').DataTable({
-                columnDefs: [{
-                    targets: [0],
-                    visible: false,
-                    searchable: false
-                },
-                ],
-                order: [[0, "asc"]],
-            });
-        });
-    </script>
-    @endsection
+    

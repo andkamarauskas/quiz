@@ -51,8 +51,8 @@ class UserQuestController extends Controller
             'question' => 'required',
             'answers' => 'required|array|min:1',
             'images' => 'required|array|min:2',
-            'images.0' => 'required|mimes:jpeg,jpg|image|max:1000',
-            'images.1' => 'required|mimes:jpeg,jpg|image|max:1000'
+            'images.0' => 'required|mimes:jpeg,jpg,png|image|max:1000',
+            'images.1' => 'required|mimes:jpeg,jpg,png|image|max:1000'
         ]);
         $quest = Quest::create($request->all());
         $quest->status = 'user';

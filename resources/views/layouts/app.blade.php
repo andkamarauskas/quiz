@@ -44,6 +44,7 @@
                     <ul class="nav navbar-nav">
                         &nbsp;
                         <li><a href="{{ route('train.index') }}">Train</a></li>
+                        <li><a href="{{ route('quzzes.main') }}">Quizzes</a></li>
                         
                     </ul>
 
@@ -58,26 +59,27 @@
                             <div class="inset">
                               <img src="{{Auth::user()->profile_pic}}">
                           </div>
-                        </li>
+                      </li>
+                      
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('quest.index') }}">Admin Panel</a></li>
+                            <li><a href="{{ route('admin.index') }}">Admin Panel</a></li>
                             <li><a href="{{ route('user.quest') }}">My Quests</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                             </li>
-                        </ul>
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                    </ul>
                 </li>
                 @endguest
             </ul>
@@ -89,6 +91,11 @@
 </div>
 
 <!-- Scripts -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+@yield('scripts')
 </body>
 </html>

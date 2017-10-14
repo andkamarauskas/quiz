@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('admin', 'AdminController@index')->name('admin.index');
-	
+
 	Route::get('admin/quests/approve', 'AdminController@questsToApprove')->name('admin.questsToApprove');
 	Route::get('admin/quests/approve/count', 'AdminController@countToApprove');
 	Route::get('admin/quest/approve/train/{id}', 'AdminController@questToTrain');
@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('quest/list','Admin\QuizController@questList');      
 	Route::get('quest/attach','Admin\QuizController@attachQuest')->name('quest.attach');    
 	Route::get('quest/detach','Admin\QuizController@detachQuest')->name('quest.detach');
+	Route::get('quizzes','Admin\QuizController@main')->name('quzzes.main');      
+	Route::get('quiz/countdown','Admin\QuizController@countdown');      
 
 	Route::get('user/quest', 'UserQuestController@index')->name('user.quest');   
 	Route::get('user/quest/create', 'UserQuestController@create')->name('user.quest.create');   

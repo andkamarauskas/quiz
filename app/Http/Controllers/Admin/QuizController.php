@@ -171,4 +171,17 @@ class QuizController extends Controller
 
         return view('backEnd.admin.quiz.questslist',['quiz' => $quiz ]);
     }
+    public function main()
+    {
+        $quizes = Quiz::all();
+        return view('quiz.quizes', compact('quizes'));
+    }
+    public function countdown()
+    {
+        $quiz = Quiz::find(1);
+        $datetime = $quiz->date . " " . $quiz->time;
+        $datetime =strtotime($datetime);
+
+        return date('Y/m/d H:i:s',$datetime);
+    }
 }
